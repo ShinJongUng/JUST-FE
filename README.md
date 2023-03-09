@@ -1,16 +1,24 @@
-# just
+<br />
+<div align="center">
 
-A new Flutter project.
+  <h1 align="center">Just Mobile App</h3>
 
-## Getting Started
+  <p align="center">
+    <img src="https://skillicons.dev/icons?i=flutter">
+    <br />
+    <br />
+    <strong>Skill: Flutter	</strong>
 
-This project is a starting point for a Flutter application.
+  </p>
+</div>
 
-A few resources to get you started if this is your first Flutter project:
+<br/>
+<br/>
+주변 사람에게는 말 못할 고민을 털어 놓을 수 있는 공간, Just
+<br/>
+<br/>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 개발 진행중인 프로젝트입니다!
+<br />
+<img src="readme_images/ui.gif" width="400">
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

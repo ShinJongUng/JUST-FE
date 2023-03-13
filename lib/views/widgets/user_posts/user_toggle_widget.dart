@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:just/views/widgets/user_profile_card.dart';
+import 'package:just/views/widgets/user_posts/user_post_widget.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
 class UserToggleWidget extends StatefulWidget {
@@ -54,27 +54,33 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
           children: [
             ListView(
               children: [
-                Container(
-                  color: Colors.red,
-                  height: 300,
-                ),
-                Container(
-                  color: Colors.green,
-                  height: 300,
-                ),
-                Container(
-                  color: Colors.blue,
-                  height: 300,
-                ),
+                for (var i = 0; i < 10; i++)
+                  const UserPostWidget(
+                    title: '제목1',
+                    numberOfComments: 10,
+                    numberOfLikes: 20,
+                  )
               ],
             ),
-            Container(
-              color: Colors.green,
-              height: 100,
+            ListView(
+              children: [
+                for (var i = 0; i < 10; i++)
+                  const UserPostWidget(
+                    title: '제목2',
+                    numberOfComments: 10,
+                    numberOfLikes: 20,
+                  )
+              ],
             ),
-            Container(
-              color: Colors.blue,
-              height: 100,
+            ListView(
+              children: [
+                for (var i = 0; i < 10; i++)
+                  const UserPostWidget(
+                    title: '제목3',
+                    numberOfComments: 10,
+                    numberOfLikes: 20,
+                  )
+              ],
             ),
           ],
         ),

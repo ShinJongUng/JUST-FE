@@ -40,7 +40,9 @@ class _StoryPageState extends State<StoryPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/search');
+            },
           ),
         ],
       ),

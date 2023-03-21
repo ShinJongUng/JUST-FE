@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:just/home_page.dart';
 import 'package:just/views/pages/post_page.dart';
+import 'package:just/views/pages/search_page.dart';
+import 'package:just/views/pages/user_post_page.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -18,6 +20,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomePage(),
         // "/second" route로 이동하면, SecondScreen 위젯을 생성합니다.
         '/post': (context) => PostPage(),
+        '/user-post': (context) => UserPostPage(),
+        '/search': (context) => SearchPage(),
       },
     );
   }

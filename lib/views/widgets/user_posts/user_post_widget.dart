@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class UserPostWidget extends StatelessWidget {
   final String title;
@@ -13,48 +14,58 @@ class UserPostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        width: double.infinity,
-        height: 100,
-        child: Row(children: [
-          SizedBox(
-            width: 100,
-            child: Image.network(
-              'https://picsum.photos/200/300',
-              fit: BoxFit.cover,
-            ),
-          ),
-          Expanded(
-            child: Container(
-              height: 100,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16),
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, '/post'),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: SizedBox(
+          width: double.infinity,
+          height: 80,
+          child: Row(children: [
+            Expanded(
+              child: Container(
+                height: 80,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
+                      overflow: TextOverflow.ellipsis,
                       title,
                       style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.comment),
-                            Text('$numberOfComments'),
-                          ],
+                        Text(
+                          DateFormat('yyyy.MM.dd').format(DateTime.now()),
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
+                          padding: const EdgeInsets.only(left: 8.0),
                           child: Row(
                             children: [
-                              const Icon(Icons.favorite),
+                              const Icon(
+                                Icons.comment,
+                                size: 17,
+                              ),
+                              Text('$numberOfComments'),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.favorite,
+                                size: 17,
+                              ),
                               Text('$numberOfLikes'),
                             ],
                           ),
@@ -65,8 +76,15 @@ class UserPostWidget extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        ]),
+            SizedBox(
+              width: 80,
+              child: Image.network(
+                'https://picsum.photos/200/300',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ]),
+        ),
       ),
     );
   }

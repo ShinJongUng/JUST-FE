@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just/views/widgets/user_posts/user_comment_widget.dart';
 import 'package:just/views/widgets/user_posts/user_post_widget.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
@@ -52,35 +53,33 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
         child: TabBarView(
           controller: _tabController,
           children: [
-            ListView(
-              children: [
-                for (var i = 0; i < 10; i++)
-                  const UserPostWidget(
-                    title: '제목1',
-                    numberOfComments: 10,
-                    numberOfLikes: 20,
-                  )
-              ],
+            ListView.builder(
+              padding: const EdgeInsets.only(bottom: 40),
+              key: PageStorageKey('user_posts'),
+              itemCount: 10,
+              itemBuilder: (context, index) => const UserPostWidget(
+                title: '제목1asdㅇssssssssssssssssssssssㅇㅇㅇ',
+                numberOfComments: 10,
+                numberOfLikes: 20,
+              ),
             ),
-            ListView(
-              children: [
-                for (var i = 0; i < 10; i++)
-                  const UserPostWidget(
-                    title: '제목2',
-                    numberOfComments: 10,
-                    numberOfLikes: 20,
-                  )
-              ],
+            ListView.builder(
+              padding: const EdgeInsets.only(bottom: 40),
+              key: PageStorageKey('user_comments'),
+              itemCount: 10,
+              itemBuilder: (context, index) => const UserCommentWidget(
+                comments: 'asdasdasdasdasdadsdadaasdasdasdassds',
+              ),
             ),
-            ListView(
-              children: [
-                for (var i = 0; i < 10; i++)
-                  const UserPostWidget(
-                    title: '제목3',
-                    numberOfComments: 10,
-                    numberOfLikes: 20,
-                  )
-              ],
+            ListView.builder(
+              padding: const EdgeInsets.only(bottom: 40),
+              key: PageStorageKey('like_posts'),
+              itemCount: 10,
+              itemBuilder: (context, index) => const UserPostWidget(
+                title: '제목1',
+                numberOfComments: 10,
+                numberOfLikes: 20,
+              ),
             ),
           ],
         ),

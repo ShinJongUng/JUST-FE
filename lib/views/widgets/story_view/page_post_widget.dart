@@ -55,7 +55,6 @@ class _PagePostWidgetState extends State<PagePostWidget> {
               onPageChanged: (page) {
                 setState(() {
                   selectedPage = page;
-                  print(page);
                 });
               },
               children: <Widget>[

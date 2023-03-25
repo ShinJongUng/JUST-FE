@@ -60,18 +60,22 @@ class _PostWidgetState extends State<PostWidget> {
                 ]),
           ),
           if (widget.postLength >= 2)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 24),
-              child: Container(
-                alignment: Alignment.bottomCenter,
-                child: PageViewDotIndicator(
-                  currentItem: widget.selectPage,
-                  count: widget.postLength,
-                  size: Size(10, 10),
-                  unselectedColor: Colors.grey,
-                  selectedColor: Colors.greenAccent,
-                  duration: Duration(milliseconds: 200),
-                  boxShape: BoxShape.circle,
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 24),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  alignment: Alignment.bottomCenter,
+                  child: PageViewDotIndicator(
+                    currentItem: widget.selectPage,
+                    count: widget.postLength,
+                    fadeEdges: true,
+                    size: Size(10, 10),
+                    unselectedColor: Colors.grey,
+                    selectedColor: Colors.greenAccent,
+                    duration: Duration(milliseconds: 300),
+                    boxShape: BoxShape.circle,
+                  ),
                 ),
               ),
             ),

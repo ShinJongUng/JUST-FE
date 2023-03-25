@@ -10,7 +10,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final _textInputController = TextEditingController();
   final List<bool> _isSelected = [true, false, false];
-
+  //TO-DO 로직 부분 widget으로 따로 빼기
   @override
   Widget build(BuildContext context) {
     return Scaffold(

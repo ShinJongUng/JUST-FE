@@ -3,8 +3,10 @@ import 'package:just/home_page.dart';
 import 'package:just/views/pages/post_page.dart';
 import 'package:just/views/pages/search_page.dart';
 import 'package:just/views/pages/user_post_page.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 void main() {
+  KakaoSdk.init(nativeAppKey: 'dad63e43a8ce025715c3181d98cbf26c');
   runApp(const MyApp());
 }
 

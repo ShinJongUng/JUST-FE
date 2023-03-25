@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:just/home_page.dart';
+import 'package:just/views/pages/login_page.dart';
 import 'package:just/views/pages/post_page.dart';
 import 'package:just/views/pages/search_page.dart';
 import 'package:just/views/pages/user_post_page.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
-void main() {
-  KakaoSdk.init(nativeAppKey: 'dad63e43a8ce025715c3181d98cbf26c');
+void main() async {
+  await dotenv.load(fileName: 'assets/config/.env');
+  KakaoSdk.init(nativeAppKey: dotenv.env['KAKAO_NATIVE_KEY']);
   runApp(const MyApp());
 }
 
@@ -24,6 +27,7 @@ class MyApp extends StatelessWidget {
         '/post': (context) => PostPage(),
         '/user-post': (context) => UserPostPage(),
         '/search': (context) => SearchPage(),
+        '/login': (context) => const LoginPage(),
       },
     );
   }

@@ -22,6 +22,7 @@ class _UserPageState extends State<UserPage> {
               icon: const Icon(Icons.settings),
               onPressed: () {
                 // 설정 페이지로 이동하는 코드 작성
+                Navigator.pushNamed(context, '/login');
               },
             ),
           ],

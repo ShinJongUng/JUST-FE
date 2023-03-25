@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:just/views/widgets/user_posts/user_toggle_widget.dart';
-import 'package:just/views/widgets/user_profile_card.dart';
+import 'package:just/views/widgets/user_info/user_profile_card.dart';
+import 'package:just/views/widgets/user_info/user_toggle_widget.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});

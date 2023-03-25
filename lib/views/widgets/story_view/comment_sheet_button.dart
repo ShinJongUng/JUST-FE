@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just/views/widgets/story_comments/comment_sheet_modal.dart';
-import 'package:just/views/widgets/icon_button.dart';
+import 'package:just/views/widgets/story_view/icon_button.dart';
 
 class CommentSheetButton extends StatelessWidget {
   final String numbersOfComments;

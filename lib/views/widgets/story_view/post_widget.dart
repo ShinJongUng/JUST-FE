@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:just/views/widgets/comment_sheet_button.dart';
-import 'package:just/views/widgets/icon_button.dart';
+import 'package:just/views/widgets/story_view/comment_sheet_button.dart';
+import 'package:just/views/widgets/story_view/icon_button.dart';
 
 class PostWidget extends StatefulWidget {
   final String numbersOfLikes;

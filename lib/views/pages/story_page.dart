@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just/utils/test_data.dart';
-import 'package:just/views/widgets/page_post_widget.dart';
+import 'package:just/views/widgets/story_view/page_post_widget.dart';
 
 class StoryPage extends StatefulWidget {
   const StoryPage({super.key});

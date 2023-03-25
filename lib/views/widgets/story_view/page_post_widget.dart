@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:just/views/widgets/post_widget.dart';
+import 'package:just/views/widgets/story_view/post_widget.dart';
 
 class PagePostWidget extends StatelessWidget {
   final String numbersOfComments;

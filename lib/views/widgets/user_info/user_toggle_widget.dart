@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:just/views/widgets/user_posts/user_comment_widget.dart';
-import 'package:just/views/widgets/user_posts/user_post_widget.dart';
+import 'package:just/views/widgets/user_info/user_comment_widget.dart';
+import 'package:just/views/widgets/user_info/user_post_widget.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
 class UserToggleWidget extends StatefulWidget {

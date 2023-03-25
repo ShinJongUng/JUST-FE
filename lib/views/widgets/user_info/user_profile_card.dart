@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just/views/widgets/user_info/username_chage_popup.dart';
 
 class UserProfileCard extends StatefulWidget {
   const UserProfileCard({super.key});
@@ -8,6 +9,14 @@ class UserProfileCard extends StatefulWidget {
 }
 
 class _UserProfileCardState extends State<UserProfileCard> {
+  String username = '통통한 너구리';
+
+  void changeUsernameState(String value) {
+    setState(() {
+      username = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,9 +43,9 @@ class _UserProfileCardState extends State<UserProfileCard> {
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
-                        '통통한 너구리',
+                        username,
                         style: TextStyle(
                             fontSize: 18.0, fontWeight: FontWeight.bold),
                       ),
@@ -55,7 +64,11 @@ class _UserProfileCardState extends State<UserProfileCard> {
                     size: 20,
                   ),
                   onPressed: () {
-                    // 이름 수정 페이지로 이동하는 코드 작성
+                    showDialog(
+                        context: context,
+                        builder: (context) => UsernameChangePopup(
+                            currentNickname: username,
+                            changeUsernameState: changeUsernameState));
                   },
                 ),
               ],

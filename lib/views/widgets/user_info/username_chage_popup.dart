@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 
 class UsernameChangePopup extends StatefulWidget {
   final String currentNickname;
-  const UsernameChangePopup({Key? key, required this.currentNickname})
+  final ValueChanged<String> changeUsernameState;
+
+  const UsernameChangePopup(
+      {Key? key,
+      required this.currentNickname,
+      required this.changeUsernameState})
       : super(key: key);
 
   @override
@@ -38,6 +43,7 @@ class _UsernameChangePopupState extends State<UsernameChangePopup> {
         ElevatedButton(
           onPressed: () {
             final newNickname = _nicknameController.text;
+            widget.changeUsernameState(newNickname);
             // TODO: 새로운 닉네임을 서버에 전송하고 저장하는 로직을 작성합니다.
             Navigator.pop(context);
           },

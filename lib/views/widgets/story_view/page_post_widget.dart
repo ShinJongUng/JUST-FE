@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just/views/widgets/story_view/post_widget.dart';
 
-class PagePostWidget extends StatelessWidget {
+class PagePostWidget extends StatefulWidget {
   final String numbersOfComments;
   final String numbersOfLikes;
   final String bgImage;
@@ -16,10 +16,28 @@ class PagePostWidget extends StatelessWidget {
   });
 
   @override
+  State<PagePostWidget> createState() => _PagePostWidgetState();
+}
+
+class _PagePostWidgetState extends State<PagePostWidget> {
+  late int selectedPage;
+  late final PageController _pageController;
+
+  @override
+  void initState() {
+    selectedPage = 0;
+    _pageController = PageController(initialPage: selectedPage);
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return PostWidget(
-        numbersOfComments: numbersOfComments,
-        numbersOfLikes: numbersOfLikes,
+        numbersOfComments: widget.numbersOfComments,
+        numbersOfLikes: widget.numbersOfLikes,
+        postLength: widget.pagesText.length,
+        selectPage: selectedPage,
         userPost: Stack(
           children: [
             Container(
@@ -27,15 +45,22 @@ class PagePostWidget extends StatelessWidget {
                 image: DecorationImage(
                   opacity: 0.7,
                   fit: BoxFit.cover,
-                  image: AssetImage(bgImage), // 배경 이미지
+                  image: AssetImage(widget.bgImage), // 배경 이미지
                 ),
               ),
             ),
             PageView(
               physics: const ClampingScrollPhysics(),
+              controller: _pageController,
+              onPageChanged: (page) {
+                setState(() {
+                  selectedPage = page;
+                  print(page);
+                });
+              },
               children: <Widget>[
-                if (pagesText.isNotEmpty)
-                  for (var text in pagesText)
+                if (widget.pagesText.isNotEmpty)
+                  for (var text in widget.pagesText)
                     Scaffold(
                       resizeToAvoidBottomInset: false,
                       backgroundColor: Colors.transparent, // 배경색을 투명으로 설정

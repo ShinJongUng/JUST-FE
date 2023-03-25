@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:just/views/widgets/story_view/comment_sheet_button.dart';
 import 'package:just/views/widgets/story_view/icon_button.dart';
+import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 
 class PostWidget extends StatefulWidget {
   final String numbersOfLikes;
   final String numbersOfComments;
   final Widget userPost;
+  final int postLength;
+  final int selectPage;
 
   const PostWidget(
       {super.key,
       required this.numbersOfComments,
       required this.numbersOfLikes,
-      required this.userPost});
+      required this.userPost,
+      required this.postLength,
+      required this.selectPage});
 
   @override
   State<PostWidget> createState() => _PostWidgetState();
@@ -54,6 +59,22 @@ class _PostWidgetState extends State<PostWidget> {
                   )
                 ]),
           ),
+          if (widget.postLength >= 2)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 24),
+              child: Container(
+                alignment: Alignment.bottomCenter,
+                child: PageViewDotIndicator(
+                  currentItem: widget.selectPage,
+                  count: widget.postLength,
+                  size: Size(10, 10),
+                  unselectedColor: Colors.grey,
+                  selectedColor: Colors.greenAccent,
+                  duration: Duration(milliseconds: 200),
+                  boxShape: BoxShape.circle,
+                ),
+              ),
+            ),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Container(

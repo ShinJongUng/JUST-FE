@@ -39,6 +39,7 @@ dependencies:
   kakao_flutter_sdk_user: ^1.4.2
   http: ^0.13.5
   flutter_dotenv: ^5.0.2
+  page_view_dot_indicator: ^2.1.0
 
 dev_dependencies:
   flutter_test:

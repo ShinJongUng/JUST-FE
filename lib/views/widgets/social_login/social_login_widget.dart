@@ -50,6 +50,7 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget> {
             AppleIDAuthorizationScopes.fullName,
           ],
         );
+        print(credential);
       } else {
         showToast('Apple 로그인을 지원하지 않는 기기입니다.');
       }

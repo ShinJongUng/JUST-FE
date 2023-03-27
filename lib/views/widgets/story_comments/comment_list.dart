@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class Comment {
@@ -74,6 +73,7 @@ class CommentList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
+        physics: ClampingScrollPhysics(),
         itemCount: comments.length,
         itemBuilder: (context, index) {
           final comment = comments[index];

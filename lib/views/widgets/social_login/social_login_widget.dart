@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:http/http.dart' as http;
@@ -13,6 +14,13 @@ enum LoginPlatform {
   kakao,
   apple,
   none, // logout
+}
+
+class Arguments {
+  final String token;
+  final String platform;
+
+  Arguments(this.token, this.platform);
 }
 
 class SocialLoginWidget extends StatefulWidget {
@@ -33,6 +41,17 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget> {
           ? await UserApi.instance.loginWithKakaoTalk()
           : await UserApi.instance.loginWithKakaoAccount();
       print('카카오톡으로 로그인 성공 ${token}');
+      final response = await http
+          .post(Uri.parse('${dotenv.env['API_URL']}/api/kakao/login'), body: {
+        'accessToken': token.accessToken,
+      });
+      print(response.body);
+      if (response.body == '/api/kakao/signup') {
+        Navigator.pushNamed(context, '/sign-up',
+            arguments: Arguments(token.accessToken, 'kakao'));
+      } else {
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      }
     } catch (error) {
       PlatformException? exception = error as PlatformException;
       if (exception.code != 'CANCELED') {

@@ -4,6 +4,7 @@ import 'package:just/home_page.dart';
 import 'package:just/views/pages/login_page.dart';
 import 'package:just/views/pages/post_page.dart';
 import 'package:just/views/pages/search_page.dart';
+import 'package:just/views/pages/signup_page.dart';
 import 'package:just/views/pages/user_post_page.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/user-post': (context) => UserPostPage(),
         '/search': (context) => SearchPage(),
         '/login': (context) => const LoginPage(),
+        '/sign-up': (context) => SignUpPage()
       },
     );
   }

@@ -65,7 +65,7 @@ Route createPostRoute() {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => PostPage(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 1.0);
+      const begin = Offset.zero;
       const end = Offset.zero;
       const curve = Curves.ease;
 

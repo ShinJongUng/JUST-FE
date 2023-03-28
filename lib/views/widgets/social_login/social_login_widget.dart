@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:http/http.dart' as http;
 
@@ -40,21 +41,29 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget> {
       OAuthToken token = isInstalled
           ? await UserApi.instance.loginWithKakaoTalk()
           : await UserApi.instance.loginWithKakaoAccount();
-      print('카카오톡으로 로그인 성공 ${token}');
       final response = await http
           .post(Uri.parse('${dotenv.env['API_URL']}/api/kakao/login'), body: {
         'accessToken': token.accessToken,
       });
-      print(response.body);
       if (response.body == '/api/kakao/signup') {
         Navigator.pushNamed(context, '/sign-up',
             arguments: Arguments(token.accessToken, 'kakao'));
       } else {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        final Map<String, dynamic> user_token = jsonDecode(response.body);
+        await prefs.setString('platform', 'kakao');
+        await prefs.setString('access-token', user_token['access_token']);
+        await prefs.setString('refresh-token', user_token['refresh_token']);
         Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
       }
     } catch (error) {
-      PlatformException? exception = error as PlatformException;
-      if (exception.code != 'CANCELED') {
+      if (error.runtimeType == PlatformException) {
+        PlatformException? exception = error as PlatformException;
+        if (exception.code != 'CANCELED') {
+          showToast('로그인 과정 중 오류가 발생했습니다.');
+        }
+      } else {
+        print(error);
         showToast('로그인 과정 중 오류가 발생했습니다.');
       }
     }
@@ -69,7 +78,14 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget> {
             AppleIDAuthorizationScopes.fullName,
           ],
         );
-        print(credential);
+        print(credential.authorizationCode);
+        print(credential.identityToken);
+        // final response = await http
+        //     .post(Uri.parse('${dotenv.env['API_URL']}/api/apple/login'), body: {
+        //   'id': credential.authorizationCode,
+        //   'email': credential.email
+        // });
+        // print(response.body);
       } else {
         showToast('Apple 로그인을 지원하지 않는 기기입니다.');
       }
@@ -84,30 +100,32 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Center(
-          child: Text(
-            'JUST',
-            style: TextStyle(
-              fontSize: 48.0,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 2.0,
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Text(
+              'JUST',
+              style: TextStyle(
+                fontSize: 48.0,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2.0,
+              ),
             ),
           ),
-        ),
-        SizedBox(height: 64.0),
-        ElevatedButton(
-          onPressed: signInWithKakao,
-          child: Text('카카오톡으로 로그인'),
-        ),
-        SizedBox(height: 16.0),
-        ElevatedButton(
-          onPressed: signInWithApple,
-          child: Text('Apple로 로그인'),
-        ),
-      ],
+          SizedBox(height: 64.0),
+          ElevatedButton(
+            onPressed: signInWithKakao,
+            child: Text('카카오톡으로 로그인'),
+          ),
+          SizedBox(height: 16.0),
+          ElevatedButton(
+            onPressed: signInWithApple,
+            child: Text('Apple로 로그인'),
+          ),
+        ],
+      ),
     );
   }
 }

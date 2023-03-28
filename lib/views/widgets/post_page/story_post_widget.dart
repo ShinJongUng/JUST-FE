@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just/views/widgets/utils/platform_ok_cancel_dialog.dart';
 
 class StoryPostWidget extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class _StoryPostWidgetState extends State<StoryPostWidget> {
   void initState() {
     super.initState();
     // 키보드 높이 구하기
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
       setState(() {
         this.keyboardHeight = keyboardHeight;
@@ -41,24 +42,11 @@ class _StoryPostWidgetState extends State<StoryPostWidget> {
             showDialog(
               context: context,
               builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('글 작성을 취소하시겠습니까?'),
-                  actions: <Widget>[
-                    TextButton(
-                      child: Text('예'),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    TextButton(
-                      child: Text('아니요'),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
+                return PlatformOkCancelDialog(
+                    title: '글 작성 취소',
+                    content: '글 작성을 취소하시겠습니까?',
+                    okText: '예',
+                    cancelText: '아니요');
               },
             );
           },

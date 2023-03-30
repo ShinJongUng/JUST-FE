@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:just/views/widgets/user_info/user_profile_card.dart';
-import 'package:just/views/widgets/user_info/user_toggle_widget.dart';
+import 'package:get/get.dart';
+import 'package:just/views/pages/setting_page.dart';
+import 'package:just/views/widgets/user_info_page/user_profile_card.dart';
+import 'package:just/views/widgets/user_info_page/user_toggle_widget.dart';
 
 class UserInfoPage extends StatelessWidget {
   const UserInfoPage({super.key});
@@ -17,7 +19,7 @@ class UserInfoPage extends StatelessWidget {
               icon: const Icon(Icons.settings),
               onPressed: () {
                 // 설정 페이지로 이동하는 코드 작성
-                Navigator.pushNamed(context, '/login');
+                Get.toNamed('/setting');
               },
             ),
           ],

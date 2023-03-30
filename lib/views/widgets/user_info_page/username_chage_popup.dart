@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UsernameChangePopup extends StatefulWidget {
   final String currentNickname;
@@ -37,7 +37,7 @@ class _UsernameChangePopupState extends State<UsernameChangePopup> {
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.pop(context);
+            Get.back();
           },
           child: const Text('취소'),
         ),
@@ -45,7 +45,7 @@ class _UsernameChangePopupState extends State<UsernameChangePopup> {
           onPressed: () {
             final newNickname = _nicknameController.text;
             widget.changeUsernameState(newNickname);
-            Navigator.pop(context);
+            Get.back();
           },
           child: const Text('변경'),
         ),

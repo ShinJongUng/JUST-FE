@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:just/getX/login_controller.dart';
 import 'package:just/models/login_model.dart';
 import 'package:just/services/postSignup.dart';
 import 'package:just/views/widgets/utils/platform_ok_cancel_dialog.dart';
@@ -34,8 +36,10 @@ class SignUpPage extends StatelessWidget {
             await prefs.setString(
                 'refresh-token', response.data['refresh_token']);
 
+            final LoginController lc = Get.put(LoginController());
+            lc.login();
             isLoading = false;
-            Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+            Get.offAllNamed('/');
           } else if (arguments.platform == 'apple') {
             final response =
                 await postAppleSignup(arguments.token, _textController.text);
@@ -48,12 +52,14 @@ class SignUpPage extends StatelessWidget {
             await prefs.setString(
                 'refresh-token', response.data['refresh_token']);
 
+            final LoginController lc = Get.put(LoginController());
+            lc.login();
             isLoading = false;
-            Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+            Get.offAllNamed('/');
           }
         } catch (e) {
           showToast('로그인 도중 문제가 발생하였습니다.');
-          Navigator.pop(context);
+          Get.back();
           isLoading = false;
         }
       }

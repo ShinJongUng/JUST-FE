@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class UserCommentWidget extends StatelessWidget {
@@ -9,7 +10,7 @@ class UserCommentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, '/user-post'),
+      onTap: () => Get.toNamed('/user-post'),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: SizedBox(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:just/utils/test_data.dart';
 import 'package:just/views/widgets/story_page/story_builder_widget.dart';
 
@@ -26,7 +27,7 @@ class _StoryPageState extends State<StoryPage> {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              Navigator.pushNamed(context, '/search');
+              Get.toNamed('/search');
             },
           ),
         ],

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:just/getX/login_controller.dart';
 import 'package:just/views/pages/post_page.dart';
 import 'package:just/views/pages/story_page.dart';
 import 'package:just/views/pages/user_info_page.dart';
+import 'package:just/views/widgets/utils/login_dialog.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,8 +16,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   void _navigateBottomBar(int index) {
+    final LoginController lc = Get.put(LoginController());
+    if (lc.isLogin == false) {
+      if (index == 0) {
+        return;
+      }
+      showDialog(context: context, builder: (context) => const LoginDialog());
+      return;
+    }
     if (index == 1) {
-      Navigator.of(context).push(createPostRoute());
+      Get.toNamed("/post");
+
       return;
     }
     setState(() {

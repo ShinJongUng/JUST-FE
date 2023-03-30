@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SearchPage extends StatefulWidget {
   SearchPage({super.key});
@@ -23,7 +24,7 @@ class _SearchPageState extends State<SearchPage> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.back();
                       },
                       icon: const Icon(Icons.arrow_back)),
                   Expanded(

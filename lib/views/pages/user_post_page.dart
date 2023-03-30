@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UserPostPage extends StatelessWidget {
   const UserPostPage({super.key});
@@ -11,7 +12,7 @@ class UserPostPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
-            Navigator.pop(context);
+            Get.back();
           },
         ),
         title: Text("post"),

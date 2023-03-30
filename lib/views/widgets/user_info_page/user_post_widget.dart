@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class UserPostWidget extends StatelessWidget {
@@ -15,7 +16,7 @@ class UserPostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, '/post'),
+      onTap: () => Get.toNamed('/post'),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: SizedBox(

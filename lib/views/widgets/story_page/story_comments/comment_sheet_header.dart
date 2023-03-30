@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CommentSheetHeader extends StatelessWidget {
   const CommentSheetHeader({super.key});
@@ -10,7 +11,7 @@ class CommentSheetHeader extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
               onTap: () {
-                Navigator.of(context).pop();
+                Get.back();
               },
               child: const Icon(
                 Icons.close,

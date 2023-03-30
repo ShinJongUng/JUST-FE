@@ -4,34 +4,26 @@ import 'dart:io' show Platform;
 
 import 'package:get/get.dart';
 
-class PlatformOkCancelDialog extends StatelessWidget {
-  final String title;
-  final String content;
-  final String okText;
-  final String cancelText;
-  const PlatformOkCancelDialog(
-      {super.key,
-      required this.title,
-      required this.content,
-      required this.okText,
-      required this.cancelText});
+class LoginDialog extends StatelessWidget {
+  const LoginDialog({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     if (Platform.isIOS) {
       return CupertinoAlertDialog(
-        title: Text(title),
-        content: Text(content),
+        title: Text("로그인이 필요한 서비스입니다."),
+        content: Text("로그인 하시겠습니까?"),
         actions: <Widget>[
           CupertinoDialogAction(
-            child: Text(okText),
+            child: Text("확인"),
             onPressed: () {
-              Get.back();
-              Get.back();
+              Get.toNamed('/login');
             },
           ),
           CupertinoDialogAction(
-            child: Text(cancelText),
+            child: Text("취소"),
             onPressed: () {
               Get.back();
             },
@@ -40,18 +32,17 @@ class PlatformOkCancelDialog extends StatelessWidget {
       );
     } else {
       return AlertDialog(
-        title: Text(title),
-        content: Text(content),
+        title: Text("로그인이 필요한 서비스입니다."),
+        content: Text("로그인 하시겠습니까?"),
         actions: <Widget>[
           TextButton(
-            child: Text(okText),
+            child: Text("확인"),
             onPressed: () {
-              Get.back();
-              Get.back();
+              Get.toNamed('/login');
             },
           ),
           TextButton(
-            child: Text(cancelText),
+            child: Text("취소"),
             onPressed: () {
               Get.back();
             },

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+
+import 'package:just/getX/login_controller.dart';
 import 'package:just/services/postLogin.dart';
 import 'package:just/views/widgets/utils/show_toast.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
@@ -23,14 +26,16 @@ void signInWithKakao(BuildContext context) async {
         : await UserApi.instance.loginWithKakaoAccount();
     final response = await postKakaoLogin(token.accessToken);
     if (response.data == '/api/kakao/signup') {
-      Navigator.pushNamed(context, '/sign-up',
+      Get.toNamed("/signup",
           arguments: LoginArguments(token.accessToken, 'kakao'));
     } else {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('platform', 'kakao');
       await prefs.setString('access-token', response.data['access_token']);
       await prefs.setString('refresh-token', response.data['refresh_token']);
-      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      final LoginController lc = Get.put(LoginController());
+      lc.login();
+      Get.offAllNamed('/');
     }
   } catch (error) {
     if (error.runtimeType == PlatformException) {
@@ -57,14 +62,16 @@ void signInWithApple(BuildContext context) async {
       );
       final response = await postAppleLogin(credential.identityToken!);
       if (response.data == '/api/apple/signup') {
-        Navigator.pushNamed(context, '/sign-up',
+        Get.toNamed("/signup",
             arguments: LoginArguments(credential.identityToken!, 'apple'));
       } else {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('platform', 'apple');
         await prefs.setString('access-token', response.data['access_token']);
         await prefs.setString('refresh-token', response.data['refresh_token']);
-        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        final LoginController lc = Get.put(LoginController());
+        lc.login();
+        Get.offAllNamed('/');
       }
     } else {
       showToast('Apple 로그인을 지원하지 않는 기기입니다.');

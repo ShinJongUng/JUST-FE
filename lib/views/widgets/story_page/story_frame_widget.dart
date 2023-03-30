@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:just/getX/login_controller.dart';
 import 'package:just/views/widgets/story_page/comment_sheet_button.dart';
 import 'package:just/views/widgets/story_page/icon_button.dart';
+import 'package:just/views/widgets/utils/login_dialog.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 
 class StoryFrameWidget extends StatefulWidget {
@@ -24,6 +27,17 @@ class StoryFrameWidget extends StatefulWidget {
 
 class _StoryFrameWidgetState extends State<StoryFrameWidget> {
   bool _isLiked = false;
+
+  void onPressFavorite() {
+    final LoginController lc = Get.put(LoginController());
+    if (!lc.isLogin) {
+      showDialog(context: context, builder: (context) => const LoginDialog());
+      return;
+    }
+    setState(() {
+      _isLiked = !_isLiked;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,11 +105,7 @@ class _StoryFrameWidgetState extends State<StoryFrameWidget> {
                         icon: _isLiked ? Icons.favorite : Icons.favorite_border,
                         color: _isLiked ? Colors.red : Colors.white,
                         number: widget.numbersOfLikes,
-                        onPressed: () {
-                          setState(() {
-                            _isLiked = !_isLiked;
-                          });
-                        }),
+                        onPressed: onPressFavorite),
                     CommentSheetButton(
                         numbersOfComments: widget.numbersOfComments),
                   ]),

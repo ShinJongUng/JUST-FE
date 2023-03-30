@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:just/views/widgets/story_comments/comment_list.dart';
-import 'package:just/views/widgets/story_comments/comment_sheet_header.dart';
-import 'package:just/views/widgets/story_comments/comment_textfield.dart';
+import 'package:just/views/widgets/story_page/story_comments/comment_list.dart';
+import 'package:just/views/widgets/story_page/story_comments/comment_sheet_header.dart';
+import 'package:just/views/widgets/story_page/story_comments/comment_textfield.dart';
 
 class CommentSheetModal extends StatelessWidget {
   CommentSheetModal({super.key});

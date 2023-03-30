@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:just/views/widgets/user_info/user_profile_card.dart';
 import 'package:just/views/widgets/user_info/user_toggle_widget.dart';
 
-class UserPage extends StatefulWidget {
-  const UserPage({super.key});
+class UserInfoPage extends StatelessWidget {
+  const UserInfoPage({super.key});
 
-  @override
-  State<UserPage> createState() => _UserPageState();
-}
-
-class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

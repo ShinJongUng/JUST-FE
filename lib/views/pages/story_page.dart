@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just/utils/test_data.dart';
-import 'package:just/views/widgets/story_view/page_post_widget.dart';
+import 'package:just/views/widgets/story_page/story_builder_widget.dart';
 
 class StoryPage extends StatefulWidget {
   const StoryPage({super.key});
@@ -11,8 +11,6 @@ class StoryPage extends StatefulWidget {
 
 class _StoryPageState extends State<StoryPage> {
   final test = TestData().data;
-  bool _isLoading = false;
-  int _currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +33,12 @@ class _StoryPageState extends State<StoryPage> {
       ),
       body: PageView(
         onPageChanged: (int index) {
-          setState(() {
-            _currentPageIndex = index;
-            _isLoading = (index == test.length - 1);
-          });
+          setState(() {});
         },
         scrollDirection: Axis.vertical,
         children: <Widget>[
           for (var t in test)
-            PagePostWidget(
+            StoryBuilderWidget(
               numbersOfComments: t['numbersOfComments'].toString(),
               numbersOfLikes: t['numbersOfLikes'].toString(),
               bgImage: t['bgImage'].toString(),

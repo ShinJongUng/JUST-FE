@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:just/views/widgets/user_info/username_chage_popup.dart';
+import 'package:just/views/widgets/user_info_page/username_chage_popup.dart';
 
 class UserProfileCard extends StatefulWidget {
   const UserProfileCard({super.key});

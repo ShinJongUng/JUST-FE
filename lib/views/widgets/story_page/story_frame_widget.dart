@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:just/views/widgets/story_view/comment_sheet_button.dart';
-import 'package:just/views/widgets/story_view/icon_button.dart';
+import 'package:just/views/widgets/story_page/comment_sheet_button.dart';
+import 'package:just/views/widgets/story_page/icon_button.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 
-class PostWidget extends StatefulWidget {
+class StoryFrameWidget extends StatefulWidget {
   final String numbersOfLikes;
   final String numbersOfComments;
   final Widget userPost;
   final int postLength;
   final int selectPage;
 
-  const PostWidget(
+  const StoryFrameWidget(
       {super.key,
       required this.numbersOfComments,
       required this.numbersOfLikes,
@@ -19,10 +19,10 @@ class PostWidget extends StatefulWidget {
       required this.selectPage});
 
   @override
-  State<PostWidget> createState() => _PostWidgetState();
+  State<StoryFrameWidget> createState() => _StoryFrameWidgetState();
 }
 
-class _PostWidgetState extends State<PostWidget> {
+class _StoryFrameWidgetState extends State<StoryFrameWidget> {
   bool _isLiked = false;
 
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just/views/pages/post_page.dart';
 import 'package:just/views/pages/story_page.dart';
-import 'package:just/views/pages/user_page.dart';
+import 'package:just/views/pages/user_info_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,10 +22,10 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  final List<Widget> _pages = [
+  final List<Widget> _pages = const [
     StoryPage(),
-    const Placeholder(),
-    UserPage(),
+    Placeholder(),
+    UserInfoPage(),
   ];
 
   @override

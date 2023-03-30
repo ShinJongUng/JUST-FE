@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:just/utils/dio_options.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -36,24 +38,24 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget> {
 
   void signInWithKakao() async {
     try {
+      final dio = Dio(DioOptions().options);
+
       bool isInstalled = await isKakaoTalkInstalled();
 
       OAuthToken token = isInstalled
           ? await UserApi.instance.loginWithKakaoTalk()
           : await UserApi.instance.loginWithKakaoAccount();
-      final response = await http
-          .post(Uri.parse('${dotenv.env['API_URL']}/api/kakao/login'), body: {
+      final response = await dio.post('/api/kakao/login', queryParameters: {
         'accessToken': token.accessToken,
       });
-      if (response.body == '/api/kakao/signup') {
+      if (response.data == '/api/kakao/signup') {
         Navigator.pushNamed(context, '/sign-up',
             arguments: Arguments(token.accessToken, 'kakao'));
       } else {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
-        final Map<String, dynamic> user_token = jsonDecode(response.body);
         await prefs.setString('platform', 'kakao');
-        await prefs.setString('access-token', user_token['access_token']);
-        await prefs.setString('refresh-token', user_token['refresh_token']);
+        await prefs.setString('access-token', response.data['access_token']);
+        await prefs.setString('refresh-token', response.data['refresh_token']);
         Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
       }
     } catch (error) {
@@ -71,6 +73,7 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget> {
 
   void signInWithApple() async {
     try {
+      final dio = Dio(DioOptions().options);
       if (await SignInWithApple.isAvailable()) {
         final credential = await SignInWithApple.getAppleIDCredential(
           scopes: [
@@ -78,21 +81,32 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget> {
             AppleIDAuthorizationScopes.fullName,
           ],
         );
-        print(credential.authorizationCode);
-        print(credential.identityToken);
-        // final response = await http
-        //     .post(Uri.parse('${dotenv.env['API_URL']}/api/apple/login'), body: {
-        //   'id': credential.authorizationCode,
-        //   'email': credential.email
-        // });
-        // print(response.body);
+        final response = await dio.post('/api/apple/login', queryParameters: {
+          'idToken': credential.identityToken,
+        });
+        if (response.data == '/api/apple/signup') {
+          Navigator.pushNamed(context, '/sign-up',
+              arguments: Arguments(credential.identityToken!, 'apple'));
+        } else {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('platform', 'apple');
+          await prefs.setString('access-token', response.data['access_token']);
+          await prefs.setString(
+              'refresh-token', response.data['refresh_token']);
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        }
       } else {
         showToast('Apple 로그인을 지원하지 않는 기기입니다.');
       }
     } catch (error) {
-      SignInWithAppleAuthorizationException? exception =
-          error as SignInWithAppleAuthorizationException;
-      if (exception.code != AuthorizationErrorCode.canceled) {
+      if (error.runtimeType == SignInWithAppleAuthorizationException) {
+        SignInWithAppleAuthorizationException? exception =
+            error as SignInWithAppleAuthorizationException;
+        if (exception.code != AuthorizationErrorCode.canceled) {
+          showToast('로그인 과정 중 오류가 발생했습니다.');
+        }
+      } else {
+        print(error);
         showToast('로그인 과정 중 오류가 발생했습니다.');
       }
     }

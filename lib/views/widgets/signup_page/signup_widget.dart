@@ -1,10 +1,11 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:just/utils/dio_options.dart';
 import 'package:just/views/widgets/social_login/social_login_widget.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
 import 'package:just/views/widgets/utils/platform_ok_cancel_dialog.dart';
+import 'package:just/views/widgets/utils/show_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupWidget extends StatefulWidget {
@@ -22,23 +23,52 @@ class _SignupWidgetState extends State<SignupWidget> {
     Arguments arguments =
         ModalRoute.of(context)?.settings.arguments as Arguments;
     final _textController = TextEditingController();
+    final dio = Dio(DioOptions().options);
 
     bool isLoading = false;
-    void _pressSignUpButton() async {
+    void pressSignUpButton() async {
       if (_formKey.currentState!.validate()) {
-        isLoading = true;
-        final response = await http.post(
-            Uri.parse('${dotenv.env['API_URL']}/api/kakao/signup'),
-            body: {
+        try {
+          isLoading = true;
+          if (arguments.platform == 'kakao') {
+            final response =
+                await dio.post('/api/kakao/signup', queryParameters: {
               'accessToken': arguments.token,
               'nickName': _textController.text,
             });
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        final Map<String, dynamic> user_token = jsonDecode(response.body);
-        await prefs.setString('platform', 'kakao');
-        await prefs.setString('access-token', user_token['access_token']);
-        await prefs.setString('refresh-token', user_token['refresh_token']);
-        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+            final SharedPreferences prefs =
+                await SharedPreferences.getInstance();
+            await prefs.setString('platform', 'kakao');
+            await prefs.setString(
+                'access-token', response.data['access_token']);
+            await prefs.setString(
+                'refresh-token', response.data['refresh_token']);
+            isLoading = false;
+            Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+          } else if (arguments.platform == 'apple') {
+            print(arguments.token);
+            final response =
+                await dio.post('/api/apple/signup', queryParameters: {
+              'idToken': arguments.token,
+              'nickName': _textController.text,
+            });
+
+            final SharedPreferences prefs =
+                await SharedPreferences.getInstance();
+            await prefs.setString('platform', 'apple');
+            await prefs.setString(
+                'access-token', response.data['access_token']);
+            await prefs.setString(
+                'refresh-token', response.data['refresh_token']);
+            isLoading = false;
+            Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+          }
+        } catch (e) {
+          print(e);
+          showToast('로그인 도중 문제가 발생하였습니다.');
+          Navigator.pop(context);
+          isLoading = false;
+        }
       }
     }
 
@@ -104,8 +134,8 @@ class _SignupWidgetState extends State<SignupWidget> {
                                     } else if (name.length < 3 ||
                                         name.length > 10) {
                                       return '닉네임은 3글자 이상 10글자 이하로 입력해주세요.';
-                                    } else if (RegExp(
-                                            r'^[a-zA-Z0-9_\uac00-\ud7a3]*(?:[^\u3131-\u314e\u314f-\u3163\uac00-\ud7a3]|[aeiouAEIOU])*[a-zA-Z0-9_\uac00-\ud7a3]*$')
+                                    } else if (!RegExp(
+                                            r'^[a-zA-Z가-힣_]*[a-zA-Z가-힣][a-zA-Z가-힣_]*$')
                                         .hasMatch(name)) {
                                       return '닉네임은 한글, 영어, 숫자만 입력 가능합니다.';
                                     }
@@ -127,7 +157,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: ElevatedButton(
-                        onPressed: isLoading ? () {} : _pressSignUpButton,
+                        onPressed: isLoading ? () {} : pressSignUpButton,
                         child: Text('닉네임 등록'),
                       ),
                     ),

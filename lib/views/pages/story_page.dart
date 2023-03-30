@@ -14,19 +14,6 @@ class _StoryPageState extends State<StoryPage> {
   bool _isLoading = false;
   int _currentPageIndex = 0;
 
-  Future<void> _handleRefresh() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    // 로딩 시간을 대기
-    await Future.delayed(const Duration(seconds: 2));
-
-    setState(() {
-      _isLoading = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,26 +33,23 @@ class _StoryPageState extends State<StoryPage> {
           ),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: _handleRefresh,
-        child: PageView(
-          onPageChanged: (int index) {
-            setState(() {
-              _currentPageIndex = index;
-              _isLoading = (index == test.length - 1);
-            });
-          },
-          scrollDirection: Axis.vertical,
-          children: <Widget>[
-            for (var t in test)
-              PagePostWidget(
-                numbersOfComments: t['numbersOfComments'].toString(),
-                numbersOfLikes: t['numbersOfLikes'].toString(),
-                bgImage: t['bgImage'].toString(),
-                pagesText: t['pagesText'],
-              ),
-          ],
-        ),
+      body: PageView(
+        onPageChanged: (int index) {
+          setState(() {
+            _currentPageIndex = index;
+            _isLoading = (index == test.length - 1);
+          });
+        },
+        scrollDirection: Axis.vertical,
+        children: <Widget>[
+          for (var t in test)
+            PagePostWidget(
+              numbersOfComments: t['numbersOfComments'].toString(),
+              numbersOfLikes: t['numbersOfLikes'].toString(),
+              bgImage: t['bgImage'].toString(),
+              pagesText: t['pagesText'],
+            ),
+        ],
       ),
     );
   }

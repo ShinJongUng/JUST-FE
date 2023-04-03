@@ -47,29 +47,31 @@ class _StoryFrameWidgetState extends State<StoryFrameWidget> {
         children: [
           widget.userPost,
           //왼쪽 오른쪽에 화살표 버튼을 만들어줘 세로 기준 중앙에 위치하고 가로 기준 끝으로 위치
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  widget.selectPage != 0
-                      ? Icon(
-                          Icons.chevron_left,
-                          size: 40,
-                          color: Colors.white.withOpacity(0.5),
-                        )
-                      : const SizedBox(),
-                  widget.selectPage != widget.postLength - 1
-                      ? Icon(
-                          Icons.chevron_right,
-                          size: 40,
-                          color: Colors.white.withOpacity(0.5),
-                        )
-                      : const SizedBox(),
-                ],
-              )
-            ],
+          IgnorePointer(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    widget.selectPage != 0
+                        ? Icon(
+                            Icons.chevron_left,
+                            size: 40,
+                            color: Colors.white.withOpacity(0.5),
+                          )
+                        : const SizedBox(),
+                    widget.selectPage != widget.postLength - 1
+                        ? Icon(
+                            Icons.chevron_right,
+                            size: 40,
+                            color: Colors.white.withOpacity(0.5),
+                          )
+                        : const SizedBox(),
+                  ],
+                )
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),

@@ -23,6 +23,8 @@ class StoryBuilderWidget extends StatefulWidget {
 class _StoryBuilderWidgetState extends State<StoryBuilderWidget> {
   late int selectedPage;
   late final PageController _pageController;
+  int _pageIndex = 0;
+  late TapDownDetails _tapDownDetails;
 
   @override
   void initState() {
@@ -38,6 +40,25 @@ class _StoryBuilderWidgetState extends State<StoryBuilderWidget> {
     });
   }
 
+  void tapPage() {
+    if (widget.pagesText.length <= 1) {
+      return;
+    }
+    if (_pageIndex < widget.pagesText.length - 1 && _isTappingRightSide()) {
+      _pageController.nextPage(
+          duration: const Duration(milliseconds: 500), curve: Curves.ease);
+      setState(() {
+        _pageIndex++;
+      });
+    } else if (_pageIndex > 0 && _isTappingLeftSide()) {
+      _pageController.previousPage(
+          duration: const Duration(milliseconds: 500), curve: Curves.ease);
+      setState(() {
+        _pageIndex--;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoryFrameWidget(
@@ -45,21 +66,37 @@ class _StoryBuilderWidgetState extends State<StoryBuilderWidget> {
         numbersOfLikes: widget.numbersOfLikes,
         postLength: widget.pagesText.length,
         selectPage: selectedPage,
-        userPost: Stack(children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                opacity: 0.7,
-                fit: BoxFit.cover,
-                image: AssetImage(widget.bgImage), // 배경 이미지
+        userPost: GestureDetector(
+          onTapDown: (TapDownDetails details) {
+            _tapDownDetails = details;
+          },
+          onTap: tapPage,
+          child: Stack(children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  opacity: 0.7,
+                  fit: BoxFit.cover,
+                  image: AssetImage(widget.bgImage), // 배경 이미지
+                ),
               ),
             ),
-          ),
-          StoryUserPostsWidget(
-            pagesText: widget.pagesText,
-            pageController: _pageController,
-            changeSelectedPage: changeSelectedPage,
-          ),
-        ]));
+            StoryUserPostsWidget(
+              pagesText: widget.pagesText,
+              pageController: _pageController,
+              changeSelectedPage: changeSelectedPage,
+            ),
+          ]),
+        ));
+  }
+
+  bool _isTappingLeftSide() {
+    return _tapDownDetails.localPosition.dx <
+        MediaQuery.of(context).size.width / 3;
+  }
+
+  bool _isTappingRightSide() {
+    return _tapDownDetails.localPosition.dx >
+        MediaQuery.of(context).size.width / 3 * 2;
   }
 }

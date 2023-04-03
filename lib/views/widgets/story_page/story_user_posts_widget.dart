@@ -18,7 +18,7 @@ class _StoryUserPostsWidgetState extends State<StoryUserPostsWidget> {
   @override
   Widget build(BuildContext context) {
     return PageView(
-      physics: const ClampingScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       controller: widget.pageController,
       onPageChanged: widget.changeSelectedPage,
       children: <Widget>[

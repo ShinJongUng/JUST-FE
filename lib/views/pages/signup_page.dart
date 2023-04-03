@@ -6,10 +6,12 @@ import 'package:just/services/post_signup.dart';
 import 'package:just/views/widgets/utils/platform_ok_cancel_dialog.dart';
 import 'package:just/views/widgets/utils/show_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({super.key});
   final _formKey = GlobalKey<FormState>();
+  static final storage = FlutterSecureStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +33,10 @@ class SignUpPage extends StatelessWidget {
             final SharedPreferences prefs =
                 await SharedPreferences.getInstance();
             await prefs.setString('platform', 'kakao');
-            await prefs.setString(
-                'access-token', response.data['access_token']);
-            await prefs.setString(
-                'refresh-token', response.data['refresh_token']);
-
+            await storage.write(
+                key: 'access-token', value: response.data['access_token']);
+            await storage.write(
+                key: 'refresh-token', value: response.data['refresh_token']);
             final LoginController lc = Get.put(LoginController());
             lc.login();
             isLoading = false;
@@ -47,10 +48,10 @@ class SignUpPage extends StatelessWidget {
             final SharedPreferences prefs =
                 await SharedPreferences.getInstance();
             await prefs.setString('platform', 'apple');
-            await prefs.setString(
-                'access-token', response.data['access_token']);
-            await prefs.setString(
-                'refresh-token', response.data['refresh_token']);
+            await storage.write(
+                key: 'access-token', value: response.data['access_token']);
+            await storage.write(
+                key: 'refresh-token', value: response.data['refresh_token']);
 
             final LoginController lc = Get.put(LoginController());
             lc.login();

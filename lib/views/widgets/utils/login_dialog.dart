@@ -19,6 +19,7 @@ class LoginDialog extends StatelessWidget {
           CupertinoDialogAction(
             child: Text("확인"),
             onPressed: () {
+              Get.back();
               Get.toNamed('/login');
             },
           ),

@@ -58,7 +58,8 @@ class _CommentTextFieldState extends State<CommentTextField> {
                     decoration: InputDecoration(
                       isDense: true,
                       hintText: lc.isLogin ? '댓글을 입력해주세요' : '로그인이 필요한 서비스입니다.',
-                      enabledBorder: OutlineInputBorder(
+                      enabled: lc.isLogin ? true : false,
+                      border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                           borderSide: const BorderSide(color: Colors.grey)),
                       focusedBorder: OutlineInputBorder(

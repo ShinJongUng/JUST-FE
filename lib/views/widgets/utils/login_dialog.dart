@@ -13,18 +13,18 @@ class LoginDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     if (Platform.isIOS) {
       return CupertinoAlertDialog(
-        title: Text("로그인이 필요한 서비스입니다."),
-        content: Text("로그인 하시겠습니까?"),
+        title: const Text("로그인이 필요한 서비스입니다."),
+        content: const Text("로그인 하시겠습니까?"),
         actions: <Widget>[
           CupertinoDialogAction(
-            child: Text("확인"),
+            child: const Text("확인"),
             onPressed: () {
               Get.back();
               Get.toNamed('/login');
             },
           ),
           CupertinoDialogAction(
-            child: Text("취소"),
+            child: const Text("취소"),
             onPressed: () {
               Get.back();
             },
@@ -33,17 +33,17 @@ class LoginDialog extends StatelessWidget {
       );
     } else {
       return AlertDialog(
-        title: Text("로그인이 필요한 서비스입니다."),
-        content: Text("로그인 하시겠습니까?"),
+        title: const Text("로그인이 필요한 서비스입니다."),
+        content: const Text("로그인 하시겠습니까?"),
         actions: <Widget>[
           TextButton(
-            child: Text("확인"),
+            child: const Text("확인"),
             onPressed: () {
               Get.toNamed('/login');
             },
           ),
           TextButton(
-            child: Text("취소"),
+            child: const Text("취소"),
             onPressed: () {
               Get.back();
             },

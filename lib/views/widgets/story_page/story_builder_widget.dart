@@ -23,7 +23,6 @@ class StoryBuilderWidget extends StatefulWidget {
 class _StoryBuilderWidgetState extends State<StoryBuilderWidget> {
   late int selectedPage;
   late final PageController _pageController;
-  int _pageIndex = 0;
   late TapDownDetails _tapDownDetails;
 
   @override
@@ -44,17 +43,17 @@ class _StoryBuilderWidgetState extends State<StoryBuilderWidget> {
     if (widget.pagesText.length <= 1) {
       return;
     }
-    if (_pageIndex < widget.pagesText.length - 1 && _isTappingRightSide()) {
+    if (selectedPage < widget.pagesText.length - 1 && _isTappingRightSide()) {
       _pageController.nextPage(
-          duration: const Duration(milliseconds: 500), curve: Curves.ease);
+          duration: const Duration(milliseconds: 300), curve: Curves.ease);
       setState(() {
-        _pageIndex++;
+        selectedPage++;
       });
-    } else if (_pageIndex > 0 && _isTappingLeftSide()) {
+    } else if (selectedPage > 0 && _isTappingLeftSide()) {
       _pageController.previousPage(
-          duration: const Duration(milliseconds: 500), curve: Curves.ease);
+          duration: const Duration(milliseconds: 300), curve: Curves.ease);
       setState(() {
-        _pageIndex--;
+        selectedPage--;
       });
     }
   }

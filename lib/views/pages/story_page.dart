@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:just/utils/test_data.dart';
 import 'package:just/views/widgets/story_page/story_builder_widget.dart';
 
@@ -23,19 +22,8 @@ class _StoryPageState extends State<StoryPage> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         title: const Text('글'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              Get.toNamed('/search');
-            },
-          ),
-        ],
       ),
       body: PageView(
-        onPageChanged: (int index) {
-          setState(() {});
-        },
         scrollDirection: Axis.vertical,
         children: <Widget>[
           for (var t in test)

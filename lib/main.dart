@@ -55,14 +55,14 @@ class _MyAppState extends State<MyApp> {
       initialRoute: "/",
       getPages: [
         GetPage(name: "/", page: () => const HomePage()),
-        GetPage(name: "/post", page: () => PostPage()),
-        GetPage(name: "/story", page: () => StoryPage()),
-        GetPage(name: "/user-info", page: () => UserInfoPage()),
+        GetPage(name: "/post", page: () => const PostPage()),
+        GetPage(name: "/story", page: () => const StoryPage()),
+        GetPage(name: "/user-info", page: () => const UserInfoPage()),
         GetPage(name: "/login", page: () => const LoginPage()),
         GetPage(name: "/signup", page: () => SignUpPage()),
-        GetPage(name: "/search", page: () => SearchPage()),
-        GetPage(name: "/user-post", page: () => UserPostPage()),
-        GetPage(name: "/setting", page: () => SettingPage()),
+        GetPage(name: "/search", page: () => const SearchPage()),
+        GetPage(name: "/user-post", page: () => const UserPostPage()),
+        GetPage(name: "/setting", page: () => const SettingPage()),
       ],
     );
   }

@@ -28,7 +28,7 @@ class _StoryUserPostsWidgetState extends State<StoryUserPostsWidget> {
               resizeToAvoidBottomInset: false,
               backgroundColor: Colors.transparent, // 배경색을 투명으로 설정
               body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Center(
                   child: Text(
                     text.toString(),

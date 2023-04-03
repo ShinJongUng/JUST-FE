@@ -9,12 +9,14 @@ class PlatformOkCancelDialog extends StatelessWidget {
   final String content;
   final String okText;
   final String cancelText;
+  final Color okTextColor;
   const PlatformOkCancelDialog(
       {super.key,
       required this.title,
       required this.content,
       required this.okText,
-      required this.cancelText});
+      required this.cancelText,
+      this.okTextColor = Colors.blue});
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +26,15 @@ class PlatformOkCancelDialog extends StatelessWidget {
         content: Text(content),
         actions: <Widget>[
           CupertinoDialogAction(
-            child: Text(okText),
+            child: Text(cancelText),
             onPressed: () {
-              Get.back();
               Get.back();
             },
           ),
           CupertinoDialogAction(
-            child: Text(cancelText),
+            child: Text(okText, style: TextStyle(color: okTextColor)),
             onPressed: () {
+              Get.back();
               Get.back();
             },
           ),

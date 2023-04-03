@@ -20,10 +20,12 @@ class _PostPageState extends State<PostPage> {
       context: context,
       builder: (BuildContext context) {
         return const PlatformOkCancelDialog(
-            title: '글 작성 취소',
-            content: '글 작성을 취소하시면 모든 내용이 사라져요. 취소하시겠어요?',
-            okText: '예',
-            cancelText: '아니요');
+          title: '글 작성 취소',
+          content: '글 작성을 취소하시면 모든 내용이 사라져요. 취소하시겠어요?',
+          okText: '작성 취소',
+          cancelText: '계속 작성하기',
+          okTextColor: Colors.red,
+        );
       },
     );
   }
@@ -140,7 +142,7 @@ class _PostPageState extends State<PostPage> {
             ),
             SafeArea(
               child: PageView.builder(
-                physics: const NeverScrollableScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 itemCount: _totalPage,
                 controller: _pageController,
                 onPageChanged: onPageChanged,

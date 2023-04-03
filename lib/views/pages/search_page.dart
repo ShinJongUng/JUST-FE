@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SearchPage extends StatefulWidget {
-  SearchPage({super.key});
+  const SearchPage({super.key});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -11,7 +11,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final _textInputController = TextEditingController();
   final List<bool> _isSelected = [true, false, false];
-  //TO-DO 로직 부분 widget으로 따로 빼기
+  //TO-DO Next 기능 개발
   @override
   Widget build(BuildContext context) {
     return Scaffold(

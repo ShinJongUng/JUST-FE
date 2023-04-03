@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just/getX/login_controller.dart';
 import 'package:just/models/login_model.dart';
-import 'package:just/services/postSignup.dart';
+import 'package:just/services/post_signup.dart';
 import 'package:just/views/widgets/utils/platform_ok_cancel_dialog.dart';
 import 'package:just/views/widgets/utils/show_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';

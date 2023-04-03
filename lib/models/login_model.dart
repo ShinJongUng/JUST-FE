@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import 'package:just/getX/login_controller.dart';
-import 'package:just/services/postLogin.dart';
+import 'package:just/services/post_login.dart';
 import 'package:just/views/widgets/utils/show_toast.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';

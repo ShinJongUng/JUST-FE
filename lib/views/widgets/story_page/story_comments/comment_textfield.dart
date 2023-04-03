@@ -57,7 +57,7 @@ class _CommentTextFieldState extends State<CommentTextField> {
                     controller: _textController,
                     decoration: InputDecoration(
                       isDense: true,
-                      hintText: lc.isLogin ? '댓글을 입력해주세요' : '로그인이 필요헌 서비스입니다.',
+                      hintText: lc.isLogin ? '댓글을 입력해주세요' : '로그인이 필요한 서비스입니다.',
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                           borderSide: const BorderSide(color: Colors.grey)),

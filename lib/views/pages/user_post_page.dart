@@ -15,9 +15,9 @@ class UserPostPage extends StatelessWidget {
             Get.back();
           },
         ),
-        title: Text("post"),
+        title: const Text("post"),
       ),
-      body: Center(),
+      body: const Center(),
     );
   }
 }

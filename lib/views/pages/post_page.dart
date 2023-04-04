@@ -103,6 +103,16 @@ class _PostPageState extends State<PostPage> {
     });
   }
 
+  void onPressPostButton() {}
+
+  @override
+  void dispose() {
+    for (final controller in _textControllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -125,7 +135,7 @@ class _PostPageState extends State<PostPage> {
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.done),
-              onPressed: () {},
+              onPressed: onPressPostButton,
             ),
           ],
         ),

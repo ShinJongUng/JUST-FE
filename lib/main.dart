@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:just/getX/login_controller.dart';
 import 'package:just/home_page.dart';
@@ -17,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   await dotenv.load(fileName: 'assets/config/.env');
   KakaoSdk.init(nativeAppKey: dotenv.env['KAKAO_NATIVE_KEY']);
+  WidgetsFlutterBinding.ensureInitialized();
 
   runApp(const MyApp());
 }
@@ -37,13 +39,18 @@ class _MyAppState extends State<MyApp> {
   }
 
   void isDeviceLogin() async {
+    final storage = FlutterSecureStorage();
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? platform = prefs.getString('platform');
+    final String? accessToken = await storage.read(key: 'access-token');
     final LoginController lc = Get.put(LoginController());
-    if (platform == 'kakao' || platform == 'apple') {
+    if ((platform == 'kakao' || platform == 'apple') && accessToken != null) {
+      lc.registerAccessToken(accessToken);
       lc.login();
     } else {
       lc.logout();
+      prefs.setString('platform', 'none');
     }
   }
 

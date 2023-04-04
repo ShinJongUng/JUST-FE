@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -20,10 +22,10 @@ class LoginPage extends StatelessWidget {
       if (!context.mounted) return;
       try {
         bool isInstalled = await isKakaoTalkInstalled();
-
         OAuthToken token = isInstalled
             ? await UserApi.instance.loginWithKakaoTalk()
             : await UserApi.instance.loginWithKakaoAccount();
+
         final response = await postKakaoLogin(token.accessToken);
         if (response.data == '/api/kakao/signup') {
           Get.toNamed("/signup",
@@ -42,11 +44,13 @@ class LoginPage extends StatelessWidget {
       } catch (error) {
         if (error.runtimeType == PlatformException) {
           PlatformException? exception = error as PlatformException;
-          if (exception.code != 'CANCELED') {
+          if (exception.code == 'NotSupportError') {
+            showToast('카카오톡 앱 로그인 이후 사용 부탁드립니다.');
+          } else if (exception.code != 'CANCELED') {
             showToast('로그인 과정 중 오류가 발생했습니다.');
           }
         } else {
-          print(error);
+          KakaoAuthException? exception = error as KakaoAuthException;
           showToast('로그인 과정 중 오류가 발생했습니다.');
         }
       }
@@ -117,12 +121,13 @@ class LoginPage extends StatelessWidget {
             child: const Text('카카오톡으로 로그인'),
           ),
           const SizedBox(height: 16.0),
-          ElevatedButton(
-            onPressed: () {
-              signInWithApple(context);
-            },
-            child: const Text('Apple로 로그인'),
-          ),
+          if (Platform.isIOS)
+            ElevatedButton(
+              onPressed: () {
+                signInWithApple(context);
+              },
+              child: const Text('Apple로 로그인'),
+            ),
         ],
       ),
     );

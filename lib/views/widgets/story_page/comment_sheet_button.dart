@@ -16,7 +16,16 @@ class CommentSheetButton extends StatelessWidget {
             context: context,
             isScrollControlled: true,
             builder: (BuildContext context) {
-              return CommentSheetModal();
+              return DraggableScrollableSheet(
+                initialChildSize: 0.5,
+                minChildSize: 0.5,
+                maxChildSize: 0.8,
+                expand: false,
+                builder:
+                    (BuildContext context, ScrollController scrollController) {
+                  return CommentSheetModal(scrollController: scrollController);
+                },
+              );
             },
           );
         });

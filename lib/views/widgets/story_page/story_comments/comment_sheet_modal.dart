@@ -4,7 +4,11 @@ import 'package:just/views/widgets/story_page/story_comments/comment_sheet_heade
 import 'package:just/views/widgets/story_page/story_comments/comment_textfield.dart';
 
 class CommentSheetModal extends StatelessWidget {
-  CommentSheetModal({super.key});
+  ScrollController scrollController;
+  CommentSheetModal({
+    super.key,
+    required this.scrollController,
+  });
 
   final List<Comment> comments = [
     Comment(
@@ -110,8 +114,7 @@ class CommentSheetModal extends StatelessWidget {
                 children: [
                   const CommentSheetHeader(),
                   CommentList(
-                    comments: comments,
-                  ),
+                      comments: comments, scrollController: scrollController),
                   const CommentTextField(),
                 ])),
       ]),

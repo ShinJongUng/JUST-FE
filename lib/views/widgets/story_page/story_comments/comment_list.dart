@@ -66,13 +66,17 @@ class _CommentWidgetState extends State<CommentWidget> {
 
 class CommentList extends StatelessWidget {
   final List<Comment> comments;
+  ScrollController scrollController;
 
-  const CommentList({Key? key, required this.comments}) : super(key: key);
+  CommentList(
+      {Key? key, required this.comments, required this.scrollController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
+        controller: scrollController,
         physics: ClampingScrollPhysics(),
         itemCount: comments.length,
         itemBuilder: (context, index) {

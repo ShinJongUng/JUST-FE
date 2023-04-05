@@ -25,38 +25,47 @@ class SignUpPage extends StatelessWidget {
       if (_formKey.currentState!.validate()) {
         try {
           isLoading = true;
-
           if (arguments.platform == 'kakao') {
             final response =
                 await postKakaoSignup(arguments.token, _textController.text);
-
-            final SharedPreferences prefs =
-                await SharedPreferences.getInstance();
-            await prefs.setString('platform', 'kakao');
-            await storage.write(
-                key: 'access-token', value: response.data['access_token']);
-            await storage.write(
-                key: 'refresh-token', value: response.data['refresh_token']);
-            final LoginController lc = Get.put(LoginController());
-            lc.login();
-            isLoading = false;
-            Get.offAllNamed('/');
+            if (response != null) {
+              final SharedPreferences prefs =
+                  await SharedPreferences.getInstance();
+              await prefs.setString('platform', 'kakao');
+              await storage.write(
+                  key: 'access-token', value: response.data['access_token']);
+              await storage.write(
+                  key: 'refresh-token', value: response.data['refresh_token']);
+              final LoginController lc = Get.put(LoginController());
+              lc.login();
+              isLoading = false;
+              Get.offAllNamed('/');
+            } else {
+              showToast('회원가입 도중 문제가 발생하였습니다.');
+              Get.back();
+              isLoading = false;
+            }
           } else if (arguments.platform == 'apple') {
             final response =
                 await postAppleSignup(arguments.token, _textController.text);
+            if (response != null) {
+              final SharedPreferences prefs =
+                  await SharedPreferences.getInstance();
+              await prefs.setString('platform', 'apple');
+              await storage.write(
+                  key: 'access-token', value: response.data['access_token']);
+              await storage.write(
+                  key: 'refresh-token', value: response.data['refresh_token']);
 
-            final SharedPreferences prefs =
-                await SharedPreferences.getInstance();
-            await prefs.setString('platform', 'apple');
-            await storage.write(
-                key: 'access-token', value: response.data['access_token']);
-            await storage.write(
-                key: 'refresh-token', value: response.data['refresh_token']);
-
-            final LoginController lc = Get.put(LoginController());
-            lc.login();
-            isLoading = false;
-            Get.offAllNamed('/');
+              final LoginController lc = Get.put(LoginController());
+              lc.login();
+              isLoading = false;
+              Get.offAllNamed('/');
+            } else {
+              showToast('회원가입 도중 문제가 발생하였습니다.');
+              Get.back();
+              isLoading = false;
+            }
           }
         } catch (e) {
           showToast('로그인 도중 문제가 발생하였습니다.');

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:just/getX/login_controller.dart';
@@ -71,6 +72,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: "/user-post", page: () => const UserPostPage()),
         GetPage(name: "/setting", page: () => const SettingPage()),
       ],
+      builder: EasyLoading.init(),
     );
   }
 }

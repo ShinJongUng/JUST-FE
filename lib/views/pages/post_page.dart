@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
+import 'package:just/services/post_story_post.dart';
+import 'package:just/views/widgets/post_page/post_widget.dart';
 import 'package:just/views/widgets/utils/platform_ok_cancel_dialog.dart';
 import 'package:just/views/widgets/utils/show_toast.dart';
 
@@ -9,13 +13,16 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
-  int _currentPage = 0;
-  int _totalPage = 1;
+  int currentPage = 0;
+  int totalPage = 1;
+  bool isPosting = false;
   final PageController _pageController = PageController();
   final List<TextEditingController> _textControllers = [
     TextEditingController()
   ];
+
   void showOkCancelDialog() {
+    if (isPosting) return;
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -31,18 +38,18 @@ class _PostPageState extends State<PostPage> {
   }
 
   void addNewPage() {
-    if (_totalPage >= 4) {
+    if (totalPage >= 4) {
       showToast('최대 4페이지까지 업로드 가능해요!');
       return;
     }
     FocusManager.instance.primaryFocus?.unfocus();
 
-    _textControllers.insert(_currentPage + 1, TextEditingController());
+    _textControllers.insert(currentPage + 1, TextEditingController());
     setState(() {
-      _totalPage++;
-      _currentPage++;
+      totalPage++;
+      currentPage++;
       _pageController.animateToPage(
-        _currentPage,
+        currentPage,
         duration: const Duration(milliseconds: 500),
         curve: Curves.ease,
       );
@@ -51,31 +58,31 @@ class _PostPageState extends State<PostPage> {
 
   void deleteCurrentPage() {
     FocusManager.instance.primaryFocus?.unfocus();
-    if (_totalPage <= 1) {
+    if (totalPage <= 1) {
       showToast('최소 1페이지는 업로드 해야해요!');
       return;
     }
-    _textControllers.removeAt(_currentPage); // [1, 3]
+    _textControllers.removeAt(currentPage); // [1, 3]
     setState(() {
-      if (_currentPage > 0) {
-        _currentPage--;
+      if (currentPage > 0) {
+        currentPage--;
         _pageController.animateToPage(
-          _currentPage,
+          currentPage,
           duration: const Duration(milliseconds: 500),
           curve: Curves.ease,
         );
       }
-      _totalPage--;
+      totalPage--;
     });
   }
 
   void pressLeftButton() {
     FocusManager.instance.primaryFocus?.unfocus();
     setState(() {
-      if (_currentPage > 0) {
-        _currentPage--;
+      if (currentPage > 0) {
+        currentPage--;
         _pageController.animateToPage(
-          _currentPage,
+          currentPage,
           duration: const Duration(milliseconds: 500),
           curve: Curves.ease,
         );
@@ -86,10 +93,10 @@ class _PostPageState extends State<PostPage> {
   void pressRightButton() {
     FocusManager.instance.primaryFocus?.unfocus();
     setState(() {
-      if (_currentPage < _totalPage - 1) {
-        _currentPage++;
+      if (currentPage < totalPage - 1) {
+        currentPage++;
         _pageController.animateToPage(
-          _currentPage,
+          currentPage,
           duration: const Duration(milliseconds: 500),
           curve: Curves.ease,
         );
@@ -99,11 +106,41 @@ class _PostPageState extends State<PostPage> {
 
   void onPageChanged(value) {
     setState(() {
-      _currentPage = value;
+      currentPage = value;
     });
   }
 
-  void onPressPostButton() {}
+  void onPressPostButton() async {
+    if (isPosting) return;
+    FocusManager.instance.primaryFocus?.unfocus();
+    if (_textControllers[0].text.isEmpty) {
+      showToast('글 내용을 입력해주세요!');
+      return;
+    } else {
+      try {
+        // final List<String> pages = _textControllers
+        //     .map((controller) => controller.text)
+        //     .toList(growable: false);
+        final response = await postStoryPost(_textControllers[0].text);
+        EasyLoading.show(status: '로딩중...');
+        isPosting = true;
+        if (response != null) {
+          showToast('글 작성에 성공했어요!');
+          EasyLoading.showSuccess('작성 성공!');
+          isPosting = false;
+          Get.back();
+        } else {
+          showToast('글 작성에 실패했어요. 다시 시도해주세요!');
+          isPosting = false;
+          EasyLoading.showError('작성 실패');
+        }
+      } catch (e) {
+        showToast('글 작성에 실패했어요. 다시 시도해주세요!');
+        isPosting = false;
+        EasyLoading.showError('작성 실패');
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -139,104 +176,18 @@ class _PostPageState extends State<PostPage> {
             ),
           ],
         ),
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
-          child: Stack(children: [
-            Positioned.fill(
-              child: Image.asset(
-                'assets/test1.jpg',
-                fit: BoxFit.cover,
-              ),
-            ),
-            SafeArea(
-              child: PageView.builder(
-                physics: const ClampingScrollPhysics(),
-                itemCount: _totalPage,
-                controller: _pageController,
-                onPageChanged: onPageChanged,
-                itemBuilder: (BuildContext context, int index) {
-                  return Column(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.75 -
-                            MediaQuery.of(context).viewInsets.bottom,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: TextField(
-                              controller: _textControllers[index],
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(color: Colors.white),
-                              maxLines: null,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                hintText: '아무 고민이나 괜찮아요.',
-                                hintStyle: TextStyle(color: Colors.grey),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-            Positioned(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.085,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: _currentPage != 0 ? pressLeftButton : null,
-                          icon: const Icon(Icons.chevron_left),
-                          disabledColor: Colors.grey,
-                        ),
-                        IconButton(
-                          onPressed: _currentPage != _totalPage - 1
-                              ? pressRightButton
-                              : null,
-                          icon: const Icon(Icons.chevron_right),
-                        ),
-                      ],
-                    ),
-                    Text('${_currentPage + 1}/$_totalPage'),
-                    Row(
-                      children: [
-                        IconButton(
-                            onPressed: deleteCurrentPage,
-                            icon: const Icon(Icons.delete)),
-                        IconButton(
-                            onPressed: addNewPage, icon: const Icon(Icons.add)),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ]),
-        ),
+        body: PostWidget(
+            currentPage: currentPage,
+            totalPage: totalPage,
+            textControllers: _textControllers,
+            pageController: _pageController,
+            isPosting: isPosting,
+            addNewPage: addNewPage,
+            deleteCurrentPage: deleteCurrentPage,
+            pressLeftButton: pressLeftButton,
+            pressRightButton: pressRightButton,
+            onPageChanged: onPageChanged),
       ),
     );
-    ;
   }
 }

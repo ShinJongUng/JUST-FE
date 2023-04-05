@@ -1,5 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' as Get;
 import 'package:just/getX/login_controller.dart';
 import 'package:just/models/login_model.dart';
 import 'package:just/services/post_signup.dart';
@@ -18,8 +19,30 @@ class SignUpPage extends StatelessWidget {
     LoginArguments arguments =
         ModalRoute.of(context)?.settings.arguments as LoginArguments;
     final _textController = TextEditingController();
-
     bool isLoading = false;
+
+    void signInService(Response<dynamic> response) async {
+      try {
+        final accessToken =
+            response.headers['authorization'].toString().split(' ')[1];
+        final refreshToken = response.headers['refresh_token'].toString();
+        if (accessToken.isNotEmpty || refreshToken.isNotEmpty) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('platform', 'kakao');
+          await storage.write(key: 'access-token', value: accessToken);
+          await storage.write(key: 'refresh-token', value: refreshToken);
+        }
+
+        final LoginController lc = Get.Get.put(LoginController());
+        lc.login();
+        isLoading = false;
+        lc.accessToken = accessToken;
+        Get.Get.offAllNamed('/');
+      } catch (e) {
+        showToast('회원가입 도중 문제가 발생하였습니다.');
+      }
+    }
+
     void pressSignUpButton() async {
       if (!context.mounted) return;
       if (_formKey.currentState!.validate()) {
@@ -29,47 +52,27 @@ class SignUpPage extends StatelessWidget {
             final response =
                 await postKakaoSignup(arguments.token, _textController.text);
             if (response != null) {
-              final SharedPreferences prefs =
-                  await SharedPreferences.getInstance();
-              await prefs.setString('platform', 'kakao');
-              await storage.write(
-                  key: 'access-token', value: response.data['access_token']);
-              await storage.write(
-                  key: 'refresh-token', value: response.data['refresh_token']);
-              final LoginController lc = Get.put(LoginController());
-              lc.login();
-              isLoading = false;
-              Get.offAllNamed('/');
+              signInService(response);
+              Get.Get.offAllNamed('/');
             } else {
               showToast('회원가입 도중 문제가 발생하였습니다.');
-              Get.back();
+              Get.Get.back();
               isLoading = false;
             }
           } else if (arguments.platform == 'apple') {
             final response =
                 await postAppleSignup(arguments.token, _textController.text);
             if (response != null) {
-              final SharedPreferences prefs =
-                  await SharedPreferences.getInstance();
-              await prefs.setString('platform', 'apple');
-              await storage.write(
-                  key: 'access-token', value: response.data['access_token']);
-              await storage.write(
-                  key: 'refresh-token', value: response.data['refresh_token']);
-
-              final LoginController lc = Get.put(LoginController());
-              lc.login();
-              isLoading = false;
-              Get.offAllNamed('/');
+              signInService(response);
             } else {
               showToast('회원가입 도중 문제가 발생하였습니다.');
-              Get.back();
+              Get.Get.back();
               isLoading = false;
             }
           }
         } catch (e) {
           showToast('로그인 도중 문제가 발생하였습니다.');
-          Get.back();
+          Get.Get.back();
           isLoading = false;
         }
       }

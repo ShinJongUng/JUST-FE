@@ -1,8 +1,9 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' as Get;
 import 'package:just/getX/login_controller.dart';
 import 'package:just/models/login_model.dart';
 import 'package:just/services/post_login.dart';
@@ -14,10 +15,32 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
-  static final storage = FlutterSecureStorage();
+  static const storage = FlutterSecureStorage();
 
   @override
   Widget build(BuildContext context) {
+    void signInService(Response<dynamic> response) async {
+      try {
+        final accessToken =
+            response.headers['authorization'].toString().split(' ')[1];
+        final refreshToken = response.headers['refresh_token'].toString();
+        if (accessToken.isNotEmpty || refreshToken.isNotEmpty) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('platform', 'kakao');
+          await prefs.setString('nickName', response.data['nickName']);
+          await storage.write(key: 'access-token', value: accessToken);
+          await storage.write(key: 'refresh-token', value: refreshToken);
+        }
+
+        final LoginController lc = Get.Get.put(LoginController());
+        lc.login();
+        lc.accessToken = accessToken;
+        Get.Get.offAllNamed('/');
+      } catch (e) {
+        showToast('로그인 도중 문제가 발생하였습니다.');
+      }
+    }
+
     void signInWithKakao(BuildContext context) async {
       if (!context.mounted) return;
       try {
@@ -28,20 +51,11 @@ class LoginPage extends StatelessWidget {
 
         final response = await postKakaoLogin(token.accessToken);
         if (response != null) {
-          if (response.data == '/api/kakao/signup') {
-            Get.toNamed("/signup",
+          if (response.toString() == '/api/kakao/signup') {
+            Get.Get.toNamed("/signup",
                 arguments: LoginArguments(token.accessToken, 'kakao'));
           } else {
-            final SharedPreferences prefs =
-                await SharedPreferences.getInstance();
-            await prefs.setString('platform', 'kakao');
-            await storage.write(
-                key: 'access-token', value: response.data['access_token']);
-            await storage.write(
-                key: 'refresh-token', value: response.data['refresh_token']);
-            final LoginController lc = Get.put(LoginController());
-            lc.login();
-            Get.offAllNamed('/');
+            signInService(response);
           }
         } else {
           showToast('로그인 도중 문제가 발생하였습니다.');
@@ -55,7 +69,6 @@ class LoginPage extends StatelessWidget {
             showToast('로그인 과정 중 오류가 발생했습니다.');
           }
         } else {
-          KakaoAuthException? exception = error as KakaoAuthException;
           showToast('로그인 과정 중 오류가 발생했습니다.');
         }
       }
@@ -74,20 +87,11 @@ class LoginPage extends StatelessWidget {
           final response = await postAppleLogin(credential.identityToken!);
           if (response != null) {
             if (response.data == '/api/apple/signup') {
-              Get.toNamed("/signup",
+              Get.Get.toNamed("/signup",
                   arguments:
                       LoginArguments(credential.identityToken!, 'apple'));
             } else {
-              final SharedPreferences prefs =
-                  await SharedPreferences.getInstance();
-              await prefs.setString('platform', 'apple');
-              await storage.write(
-                  key: 'access-token', value: response.data['access_token']);
-              await storage.write(
-                  key: 'refresh-token', value: response.data['refresh_token']);
-              final LoginController lc = Get.put(LoginController());
-              lc.login();
-              Get.offAllNamed('/');
+              signInService(response);
             }
           } else {
             showToast('로그인 도중 문제가 발생하였습니다.');
@@ -103,7 +107,6 @@ class LoginPage extends StatelessWidget {
             showToast('로그인 과정 중 오류가 발생했습니다.');
           }
         } else {
-          print(error);
           showToast('로그인 과정 중 오류가 발생했습니다.');
         }
       }

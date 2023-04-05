@@ -10,6 +10,7 @@ import 'package:just/views/pages/post_page.dart';
 import 'package:just/views/pages/search_page.dart';
 import 'package:just/views/pages/setting_page.dart';
 import 'package:just/views/pages/signup_page.dart';
+import 'package:just/views/pages/single_post_page.dart';
 import 'package:just/views/pages/story_page.dart';
 import 'package:just/views/pages/user_info_page.dart';
 import 'package:just/views/pages/user_post_page.dart';
@@ -71,6 +72,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: "/search", page: () => const SearchPage()),
         GetPage(name: "/user-post", page: () => const UserPostPage()),
         GetPage(name: "/setting", page: () => const SettingPage()),
+        GetPage(name: "/single-post", page: () => const SinglePostPage())
       ],
       builder: EasyLoading.init(),
     );

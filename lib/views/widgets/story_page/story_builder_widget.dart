@@ -3,8 +3,8 @@ import 'package:just/views/widgets/story_page/story_frame_widget.dart';
 import 'package:just/views/widgets/story_page/story_user_posts_widget.dart';
 
 class StoryBuilderWidget extends StatefulWidget {
-  final String numbersOfComments;
-  final String numbersOfLikes;
+  final int numbersOfComments;
+  final int numbersOfLikes;
   final String bgImage;
   final List<dynamic> pagesText;
 
@@ -24,6 +24,7 @@ class _StoryBuilderWidgetState extends State<StoryBuilderWidget> {
   late int selectedPage;
   late final PageController _pageController;
   late TapDownDetails _tapDownDetails;
+  bool isImageLoading = true;
 
   @override
   void initState() {
@@ -74,9 +75,9 @@ class _StoryBuilderWidgetState extends State<StoryBuilderWidget> {
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  opacity: 0.7,
+                  opacity: 0.5,
                   fit: BoxFit.cover,
-                  image: AssetImage(widget.bgImage), // 배경 이미지
+                  image: NetworkImage(widget.bgImage), // 배경 이미지
                 ),
               ),
             ),

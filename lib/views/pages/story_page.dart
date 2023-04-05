@@ -28,8 +28,8 @@ class _StoryPageState extends State<StoryPage> {
         children: <Widget>[
           for (var t in test)
             StoryBuilderWidget(
-              numbersOfComments: t['numbersOfComments'].toString(),
-              numbersOfLikes: t['numbersOfLikes'].toString(),
+              numbersOfComments: t['numbersOfComments'],
+              numbersOfLikes: t['numbersOfLikes'],
               bgImage: t['bgImage'].toString(),
               pagesText: t['pagesText'],
             ),

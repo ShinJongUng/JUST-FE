@@ -23,6 +23,7 @@ Future<Response?> postKakaoSignup(String token, String nickname) async {
     });
     return response;
   } catch (e) {
+    print(e);
     return null;
   }
 }

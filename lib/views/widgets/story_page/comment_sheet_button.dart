@@ -3,7 +3,7 @@ import 'package:just/views/widgets/story_page/story_comments/comment_sheet_modal
 import 'package:just/views/widgets/story_page/icon_button.dart';
 
 class CommentSheetButton extends StatelessWidget {
-  final String numbersOfComments;
+  final int numbersOfComments;
   const CommentSheetButton({super.key, required this.numbersOfComments});
 
   @override

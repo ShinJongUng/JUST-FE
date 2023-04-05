@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
   final IconData icon;
-  final String number;
+  final int number;
   final Function()? onPressed;
   final Color color;
   const CustomIconButton(
@@ -26,7 +26,7 @@ class CustomIconButton extends StatelessWidget {
             ),
             onPressed: onPressed,
           ),
-          Text(number)
+          Text(number.toString())
         ],
       ),
     );

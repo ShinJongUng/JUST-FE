@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:just/models/post_arguments.dart';
 
 class UserPostWidget extends StatelessWidget {
   final String title;
@@ -16,7 +17,9 @@ class UserPostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed('/post'),
+      onTap: () => Get.toNamed('/single-post',
+          arguments: PostArguments(numberOfComments, numberOfLikes,
+              "https://picsum.photos/200/300", ['ddddddd', 'ddddddd'])),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: SizedBox(

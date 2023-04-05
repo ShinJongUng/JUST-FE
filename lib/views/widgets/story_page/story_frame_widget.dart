@@ -7,8 +7,8 @@ import 'package:just/views/widgets/utils/login_dialog.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 
 class StoryFrameWidget extends StatefulWidget {
-  final String numbersOfLikes;
-  final String numbersOfComments;
+  final int numbersOfLikes;
+  final int numbersOfComments;
   final Widget userPost;
   final int postLength;
   final int selectPage;

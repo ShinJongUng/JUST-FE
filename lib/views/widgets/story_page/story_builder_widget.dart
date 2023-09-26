@@ -5,14 +5,14 @@ import 'package:just/views/widgets/story_page/story_user_posts_widget.dart';
 class StoryBuilderWidget extends StatefulWidget {
   final int numbersOfComments;
   final int numbersOfLikes;
-  final String bgImage;
+  final int bgImageId;
   final List<dynamic> pagesText;
 
   const StoryBuilderWidget({
     super.key,
     required this.numbersOfComments,
     required this.numbersOfLikes,
-    required this.bgImage,
+    required this.bgImageId,
     required this.pagesText,
   });
 
@@ -77,7 +77,8 @@ class _StoryBuilderWidgetState extends State<StoryBuilderWidget> {
                 image: DecorationImage(
                   opacity: 0.5,
                   fit: BoxFit.cover,
-                  image: NetworkImage(widget.bgImage), // 배경 이미지
+                  image: AssetImage(
+                      "assets/test${widget.bgImageId}.jpg"), // 배경 이미지
                 ),
               ),
             ),

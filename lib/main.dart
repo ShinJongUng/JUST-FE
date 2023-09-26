@@ -35,7 +35,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    final LoginController lc = Get.put(LoginController());
+    Get.put(LoginController());
     isDeviceLogin();
     super.initState();
   }
@@ -54,6 +54,7 @@ class _MyAppState extends State<MyApp> {
       lc.logout();
       prefs.setString('platform', 'none');
     }
+    lc.login();
   }
 
   @override

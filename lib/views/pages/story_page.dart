@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just/models/post_arguments.dart';
 import 'package:just/utils/test_data.dart';
 import 'package:just/views/widgets/story_page/story_builder_widget.dart';
 
@@ -10,7 +11,28 @@ class StoryPage extends StatefulWidget {
 }
 
 class _StoryPageState extends State<StoryPage> {
-  final test = TestData().data;
+  late List<PostArguments> test;
+
+  @override
+  void initState() {
+    super.initState();
+    test = _fetchData();
+  }
+
+  List<PostArguments> _fetchData() {
+    return TestData().data;
+  }
+
+  List<Widget> _buildStories() {
+    return test.map((data) {
+      return StoryBuilderWidget(
+        numbersOfComments: data.numbersOfComments,
+        numbersOfLikes: data.numbersOfLikes,
+        bgImageId: data.bgImageId,
+        pagesText: data.pagesText,
+      );
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +47,7 @@ class _StoryPageState extends State<StoryPage> {
       ),
       body: PageView(
         scrollDirection: Axis.vertical,
-        children: <Widget>[
-          for (var t in test)
-            StoryBuilderWidget(
-              numbersOfComments: t['numbersOfComments'],
-              numbersOfLikes: t['numbersOfLikes'],
-              bgImage: t['bgImage'].toString(),
-              pagesText: t['pagesText'],
-            ),
-        ],
+        children: _buildStories(),
       ),
     );
   }

@@ -58,9 +58,9 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
               key: PageStorageKey('user_posts'),
               itemCount: 10,
               itemBuilder: (context, index) => const UserPostWidget(
-                title: '제목1asdㅇssssssssssssssssssssssㅇㅇㅇ',
-                numberOfComments: 10,
-                numberOfLikes: 20,
+                title: 'ㅎㅇㅎㅇ',
+                numbersOfComments: 10,
+                numbersOfLikes: 20,
               ),
             ),
             ListView.builder(
@@ -68,7 +68,7 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
               key: PageStorageKey('user_comments'),
               itemCount: 10,
               itemBuilder: (context, index) => const UserCommentWidget(
-                comments: 'asdasdasdasdasdadsdadaasdasdasdassds',
+                comments: '하이루',
               ),
             ),
             ListView.builder(
@@ -76,9 +76,9 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
               key: PageStorageKey('like_posts'),
               itemCount: 10,
               itemBuilder: (context, index) => const UserPostWidget(
-                title: '제목1',
-                numberOfComments: 10,
-                numberOfLikes: 20,
+                title: '해윙',
+                numbersOfComments: 10,
+                numbersOfLikes: 20,
               ),
             ),
           ],

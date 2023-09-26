@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PostWidget extends StatelessWidget {
+class PostWidget extends StatefulWidget {
   final int currentPage;
   final int totalPage;
   final bool isPosting;
@@ -27,9 +27,61 @@ class PostWidget extends StatelessWidget {
   });
 
   @override
+  State<PostWidget> createState() => _PostWidgetState();
+}
+
+class _PostWidgetState extends State<PostWidget> {
+  int _currentImageId = 1;
+  void _updateImage(int imageId) {
+    setState(() {
+      _currentImageId = imageId;
+    });
+  }
+
+  void _showImagePickerBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SizedBox(
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: Column(children: [
+              const SizedBox(
+                height: 12,
+              ),
+              const Text('배경 사진 선택', style: TextStyle(fontSize: 18)),
+              const SizedBox(
+                height: 12,
+              ),
+              Expanded(
+                child: GridView.builder(
+                  padding: const EdgeInsets.all(10),
+                  itemCount: 4,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                  itemBuilder: (context, index) {
+                    String imagePath = 'assets/test${index + 1}.jpg';
+                    return GestureDetector(
+                      onTap: () {
+                        _updateImage(index + 1);
+                        Navigator.pop(context);
+                      },
+                      child: Image.asset(imagePath, fit: BoxFit.cover),
+                    );
+                  },
+                ),
+              ),
+            ]));
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return IgnorePointer(
-      ignoring: isPosting,
+      ignoring: widget.isPosting,
       child: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
@@ -37,16 +89,16 @@ class PostWidget extends StatelessWidget {
         child: Stack(children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/test1.jpg',
+              'assets/test$_currentImageId.jpg',
               fit: BoxFit.cover,
             ),
           ),
           SafeArea(
             child: PageView.builder(
               physics: const ClampingScrollPhysics(),
-              itemCount: totalPage,
-              controller: pageController,
-              onPageChanged: onPageChanged,
+              itemCount: widget.totalPage,
+              controller: widget.pageController,
+              onPageChanged: widget.onPageChanged,
               itemBuilder: (BuildContext context, int index) {
                 return Column(
                   children: [
@@ -63,7 +115,7 @@ class PostWidget extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Center(
                           child: TextField(
-                            controller: textControllers[index],
+                            controller: widget.textControllers[index],
                             textAlign: TextAlign.center,
                             style: const TextStyle(color: Colors.white),
                             maxLines: null,
@@ -98,26 +150,33 @@ class PostWidget extends StatelessWidget {
                   Row(
                     children: [
                       IconButton(
-                        onPressed: currentPage != 0 ? pressLeftButton : null,
+                        onPressed: widget.currentPage != 0
+                            ? widget.pressLeftButton
+                            : null,
                         icon: const Icon(Icons.chevron_left),
                         disabledColor: Colors.grey,
                       ),
                       IconButton(
-                        onPressed: currentPage != totalPage - 1
-                            ? pressRightButton
+                        onPressed: widget.currentPage != widget.totalPage - 1
+                            ? widget.pressRightButton
                             : null,
                         icon: const Icon(Icons.chevron_right),
                       ),
                     ],
                   ),
-                  Text('${currentPage + 1}/$totalPage'),
+                  Text('${widget.currentPage + 1}/${widget.totalPage}'),
                   Row(
                     children: [
                       IconButton(
-                          onPressed: deleteCurrentPage,
+                          onPressed: widget.deleteCurrentPage,
                           icon: const Icon(Icons.delete)),
                       IconButton(
-                          onPressed: addNewPage, icon: const Icon(Icons.add)),
+                        onPressed: () => _showImagePickerBottomSheet(context),
+                        icon: const Icon(Icons.image),
+                      ),
+                      IconButton(
+                          onPressed: widget.addNewPage,
+                          icon: const Icon(Icons.add)),
                     ],
                   )
                 ],

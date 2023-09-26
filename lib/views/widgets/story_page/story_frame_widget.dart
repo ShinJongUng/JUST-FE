@@ -46,7 +46,6 @@ class _StoryFrameWidgetState extends State<StoryFrameWidget> {
       body: Stack(
         children: [
           widget.userPost,
-          //왼쪽 오른쪽에 화살표 버튼을 만들어줘 세로 기준 중앙에 위치하고 가로 기준 끝으로 위치
           IgnorePointer(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -73,16 +72,16 @@ class _StoryFrameWidgetState extends State<StoryFrameWidget> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
+          const Padding(
+            padding: EdgeInsets.all(20.0),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15.0),
+                    padding: EdgeInsets.symmetric(vertical: 15.0),
                     child: Row(
-                      children: const [
+                      children: [
                         Icon(
                           Icons.person,
                           size: 20,
@@ -111,10 +110,10 @@ class _StoryFrameWidgetState extends State<StoryFrameWidget> {
                     currentItem: widget.selectPage,
                     count: widget.postLength,
                     fadeEdges: true,
-                    size: Size(10, 10),
+                    size: const Size(10, 10),
                     unselectedColor: Colors.grey,
                     selectedColor: Colors.greenAccent,
-                    duration: Duration(milliseconds: 100),
+                    duration: const Duration(milliseconds: 100),
                     boxShape: BoxShape.circle,
                   ),
                 ),
@@ -141,6 +140,5 @@ class _StoryFrameWidgetState extends State<StoryFrameWidget> {
         ],
       ),
     );
-    ;
   }
 }

@@ -21,7 +21,7 @@ class SinglePostPage extends StatelessWidget {
       body: StoryBuilderWidget(
           numbersOfComments: arguments.numbersOfComments,
           numbersOfLikes: arguments.numbersOfLikes,
-          bgImage: arguments.bgImage,
+          bgImageId: arguments.bgImageId,
           pagesText: arguments.pagesText),
     );
   }

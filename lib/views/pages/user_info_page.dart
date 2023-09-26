@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:just/views/pages/setting_page.dart';
 import 'package:just/views/widgets/user_info_page/user_profile_card.dart';
 import 'package:just/views/widgets/user_info_page/user_toggle_widget.dart';
 

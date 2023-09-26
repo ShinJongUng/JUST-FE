@@ -5,21 +5,25 @@ import 'package:just/models/post_arguments.dart';
 
 class UserPostWidget extends StatelessWidget {
   final String title;
-  final int numberOfComments;
-  final int numberOfLikes;
+  final int numbersOfComments;
+  final int numbersOfLikes;
 
   const UserPostWidget(
       {super.key,
       required this.title,
-      required this.numberOfComments,
-      required this.numberOfLikes});
+      required this.numbersOfComments,
+      required this.numbersOfLikes});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.toNamed('/single-post',
-          arguments: PostArguments(numberOfComments, numberOfLikes,
-              "https://picsum.photos/200/300", ['ddddddd', 'ddddddd'])),
+          arguments: PostArguments(
+            bgImageId: 1,
+            pagesText: ['ddddddd', 'ddddddd'],
+            numbersOfComments: numbersOfComments,
+            numbersOfLikes: numbersOfLikes,
+          )),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: SizedBox(
@@ -58,7 +62,7 @@ class UserPostWidget extends StatelessWidget {
                                 Icons.comment,
                                 size: 17,
                               ),
-                              Text('$numberOfComments'),
+                              Text('$numbersOfComments'),
                             ],
                           ),
                         ),
@@ -70,7 +74,7 @@ class UserPostWidget extends StatelessWidget {
                                 Icons.favorite,
                                 size: 17,
                               ),
-                              Text('$numberOfLikes'),
+                              Text('$numbersOfLikes'),
                             ],
                           ),
                         )
@@ -82,8 +86,8 @@ class UserPostWidget extends StatelessWidget {
             ),
             SizedBox(
               width: 80,
-              child: Image.network(
-                'https://picsum.photos/200/300',
+              child: Image.asset(
+                'assets/test1.jpg',
                 fit: BoxFit.cover,
               ),
             ),

@@ -4,7 +4,11 @@ import 'package:just/getX/login_controller.dart';
 import 'package:just/views/widgets/utils/login_dialog.dart';
 
 class CommentTextField extends StatefulWidget {
-  const CommentTextField({super.key});
+  DraggableScrollableController draggableScrollableController;
+  CommentTextField({
+    super.key,
+    required this.draggableScrollableController,
+  });
 
   @override
   State<CommentTextField> createState() => _CommentTextFieldState();
@@ -27,6 +31,10 @@ class _CommentTextFieldState extends State<CommentTextField> {
     if (!lc.isLogin) {
       showDialog(context: context, builder: (context) => const LoginDialog());
       return;
+    } else {
+      //widget.draggableScrollableController
+      widget.draggableScrollableController.animateTo(1,
+          duration: Duration(milliseconds: 200), curve: Curves.easeIn);
     }
   }
 

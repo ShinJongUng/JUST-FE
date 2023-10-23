@@ -5,10 +5,11 @@ import 'package:just/views/widgets/story_page/story_comments/comment_textfield.d
 
 class CommentSheetModal extends StatelessWidget {
   ScrollController scrollController;
-  CommentSheetModal({
-    super.key,
-    required this.scrollController,
-  });
+  DraggableScrollableController draggableScrollableController;
+  CommentSheetModal(
+      {super.key,
+      required this.scrollController,
+      required this.draggableScrollableController});
 
   final List<Comment> comments = [
     Comment(
@@ -115,7 +116,9 @@ class CommentSheetModal extends StatelessWidget {
                   const CommentSheetHeader(),
                   CommentList(
                       comments: comments, scrollController: scrollController),
-                  const CommentTextField(),
+                  CommentTextField(
+                      draggableScrollableController:
+                          draggableScrollableController),
                 ])),
       ]),
     );

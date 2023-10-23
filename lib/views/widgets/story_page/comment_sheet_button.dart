@@ -8,6 +8,8 @@ class CommentSheetButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DraggableScrollableController draggableScrollableController =
+        DraggableScrollableController();
     return CustomIconButton(
         icon: Icons.chat_bubble_outline,
         number: numbersOfComments,
@@ -17,13 +19,17 @@ class CommentSheetButton extends StatelessWidget {
             isScrollControlled: true,
             builder: (BuildContext context) {
               return DraggableScrollableSheet(
+                controller: draggableScrollableController,
                 initialChildSize: 0.5,
                 minChildSize: 0.5,
                 maxChildSize: 0.8,
                 expand: false,
                 builder:
                     (BuildContext context, ScrollController scrollController) {
-                  return CommentSheetModal(scrollController: scrollController);
+                  return CommentSheetModal(
+                      scrollController: scrollController,
+                      draggableScrollableController:
+                          draggableScrollableController);
                 },
               );
             },

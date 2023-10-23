@@ -59,7 +59,7 @@ class _PostPageState extends State<PostPage> {
   void deleteCurrentPage() {
     FocusManager.instance.primaryFocus?.unfocus();
     if (totalPage <= 1) {
-      showToast('최소 1페이지는 업로드 해야해요!');
+      showToast('최소 1페이지는 작성 해야해요!');
       return;
     }
     _textControllers.removeAt(currentPage); // [1, 3]

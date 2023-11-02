@@ -22,18 +22,20 @@ class LoginPage extends StatelessWidget {
     void signInService(Response<dynamic> response) async {
       try {
         final accessToken =
-            response.headers['authorization'].toString().split(' ')[1];
-        final refreshToken = response.headers['refresh_token'].toString();
-        if (accessToken.isNotEmpty || refreshToken.isNotEmpty) {
+            response.headers['authorization']?[0].toString().split(' ')[1];
+        final refreshToken = response.headers['refresh_token']?[0].toString();
+
+        if (accessToken!.isNotEmpty || refreshToken!.isNotEmpty) {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('platform', 'kakao');
-          await prefs.setString('nickName', response.data['nickName']);
+          await prefs.setString('nick-name', response.data['nickname']);
           await storage.write(key: 'access-token', value: accessToken);
           await storage.write(key: 'refresh-token', value: refreshToken);
         }
 
         final LoginController lc = Get.Get.put(LoginController());
         lc.login();
+        lc.nickname = response.data['nickname'];
         lc.accessToken = accessToken;
         Get.Get.offAllNamed('/');
       } catch (e) {
@@ -50,6 +52,7 @@ class LoginPage extends StatelessWidget {
             : await UserApi.instance.loginWithKakaoAccount();
 
         final response = await postKakaoLogin(token.accessToken);
+
         if (response != null) {
           if (response.toString() == '/api/kakao/signup') {
             Get.Get.toNamed("/signup",
@@ -134,13 +137,13 @@ class LoginPage extends StatelessWidget {
             child: const Text('카카오톡으로 로그인'),
           ),
           const SizedBox(height: 16.0),
-          if (Platform.isIOS)
-            ElevatedButton(
-              onPressed: () {
-                signInWithApple(context);
-              },
-              child: const Text('Apple로 로그인'),
-            ),
+          // if (Platform.isIOS)
+          //   ElevatedButton(
+          //     onPressed: () {
+          //       signInWithApple(context);
+          //     },
+          //     child: const Text('Apple로 로그인'),
+          //   ),
         ],
       ),
     );

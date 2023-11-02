@@ -41,20 +41,21 @@ class _MyAppState extends State<MyApp> {
   }
 
   void isDeviceLogin() async {
-    final storage = FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? platform = prefs.getString('platform');
     final String? accessToken = await storage.read(key: 'access-token');
+    final String? nickName = prefs.getString('nick-name');
     final LoginController lc = Get.put(LoginController());
     if ((platform == 'kakao' || platform == 'apple') && accessToken != null) {
+      lc.registerNickname(nickName);
       lc.registerAccessToken(accessToken);
       lc.login();
     } else {
       lc.logout();
       prefs.setString('platform', 'none');
     }
-    lc.login();
   }
 
   @override

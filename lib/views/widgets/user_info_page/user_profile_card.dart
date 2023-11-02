@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:just/getX/login_controller.dart';
 import 'package:just/services/post_change_nickname.dart';
 import 'package:just/views/widgets/user_info_page/username_chage_popup.dart';
+import 'package:get/get.dart';
 import 'package:just/views/widgets/utils/show_toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfileCard extends StatefulWidget {
   const UserProfileCard({super.key});
@@ -12,10 +15,11 @@ class UserProfileCard extends StatefulWidget {
 }
 
 class _UserProfileCardState extends State<UserProfileCard> {
-  String username = '통통한 너구리';
+  final LoginController lc = Get.put(LoginController());
 
   void changeUsernameState(String value) async {
-    if (username == value) return;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (lc.nickname == value) return;
     if (value.isEmpty) {
       showToast('닉네임을 입력하세요.');
     } else if (value.length < 3 || value.length > 10) {
@@ -31,8 +35,9 @@ class _UserProfileCardState extends State<UserProfileCard> {
         return;
       }
       setState(() {
-        username = value;
+        lc.nickname = value;
       });
+      prefs.setString('nick-name', value);
       EasyLoading.showSuccess('닉네임 변경 완료!');
     }
   }
@@ -62,18 +67,16 @@ class _UserProfileCardState extends State<UserProfileCard> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        username,
-                        style: TextStyle(
+                        lc.nickname,
+                        style: const TextStyle(
                             fontSize: 18.0, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 8.0),
-                      Text(
-                        '@asdflel123d',
-                        style: TextStyle(fontSize: 14.0),
-                      ),
+                      const SizedBox(
+                        height: 8,
+                      )
                     ],
                   ),
                 ),
@@ -87,7 +90,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
                     showDialog(
                         context: context,
                         builder: (context) => UsernameChangePopup(
-                            currentNickname: username,
+                            currentNickname: lc.nickname,
                             changeUsernameState: changeUsernameState));
                   },
                 ),

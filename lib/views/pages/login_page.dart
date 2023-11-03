@@ -50,7 +50,6 @@ class LoginPage extends StatelessWidget {
         OAuthToken token = isInstalled
             ? await UserApi.instance.loginWithKakaoTalk()
             : await UserApi.instance.loginWithKakaoAccount();
-
         final response = await postKakaoLogin(token.accessToken);
         if (response != null) {
           if (response.toString() == '/api/kakao/signup') {

@@ -4,8 +4,8 @@ import 'package:just/utils/dio_options.dart';
 Future<Response?> postKakaoLogin(String accessToken) async {
   try {
     final dio = Dio(DioOptions().options);
-    final response = await dio.post('/api/kakao/login', queryParameters: {
-      'accessToken': accessToken,
+    final response = await dio.post('/kakao/login', queryParameters: {
+      'access_token': accessToken,
     });
     return response;
   } catch (e) {
@@ -16,8 +16,8 @@ Future<Response?> postKakaoLogin(String accessToken) async {
 Future<Response?> postAppleLogin(String idToken) async {
   try {
     final dio = Dio(DioOptions().options);
-    final response = await dio.post('/api/apple/login', queryParameters: {
-      'idToken': idToken,
+    final response = await dio.post('/apple/login', queryParameters: {
+      'id_token': idToken,
     });
     return response;
   } catch (e) {

@@ -29,6 +29,7 @@ class SignUpPage extends StatelessWidget {
         if (accessToken.isNotEmpty || refreshToken.isNotEmpty) {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('platform', 'kakao');
+          await prefs.setString('nick-name', _textController.text);
           await storage.write(key: 'access-token', value: accessToken);
           await storage.write(key: 'refresh-token', value: refreshToken);
         }
@@ -36,7 +37,9 @@ class SignUpPage extends StatelessWidget {
         final LoginController lc = Get.Get.put(LoginController());
         lc.login();
         isLoading = false;
-        lc.accessToken = accessToken;
+        lc.registerNickname(_textController.text);
+        lc.registerAccessToken(accessToken);
+
         Get.Get.offAllNamed('/');
       } catch (e) {
         showToast('회원가입 도중 문제가 발생하였습니다.');

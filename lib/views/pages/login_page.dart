@@ -52,7 +52,6 @@ class LoginPage extends StatelessWidget {
             : await UserApi.instance.loginWithKakaoAccount();
 
         final response = await postKakaoLogin(token.accessToken);
-
         if (response != null) {
           if (response.toString() == '/api/kakao/signup') {
             Get.Get.toNamed("/signup",
@@ -129,13 +128,26 @@ class LoginPage extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 64.0),
-          ElevatedButton(
-            onPressed: () {
-              signInWithKakao(context);
-            },
-            child: const Text('카카오톡으로 로그인'),
+          const SizedBox(height: 10.0),
+          const Center(
+            child: Text(
+              '대화가 필요할 때, JUST',
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2.0,
+              ),
+            ),
           ),
+          const SizedBox(height: 120.0),
+          GestureDetector(
+              onTap: () {
+                signInWithKakao(context);
+              },
+              child: Image.asset(
+                'assets/kakao_login_large_wide.png',
+                width: MediaQuery.of(context).size.width * 0.8,
+              )),
           const SizedBox(height: 16.0),
           // if (Platform.isIOS)
           //   ElevatedButton(

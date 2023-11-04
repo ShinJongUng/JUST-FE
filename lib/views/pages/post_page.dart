@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:just/getX/post_write_controller.dart';
 import 'package:just/services/post_story_post.dart';
 import 'package:just/views/widgets/post_page/post_widget.dart';
 import 'package:just/views/widgets/utils/platform_ok_cancel_dialog.dart';
@@ -111,34 +112,40 @@ class _PostPageState extends State<PostPage> {
   }
 
   void onPressPostButton() async {
+    final PostWriteController pc = Get.put(PostWriteController());
     if (isPosting) return;
     FocusManager.instance.primaryFocus?.unfocus();
-    if (_textControllers[0].text.isEmpty) {
-      showToast('글 내용을 입력해주세요!');
-      return;
-    } else {
-      try {
-        // final List<String> pages = _textControllers
-        //     .map((controller) => controller.text)
-        //     .toList(growable: false);
-        final response = await postStoryPost(_textControllers[0].text);
-        EasyLoading.show(status: '로딩중...');
-        isPosting = true;
-        if (response != null) {
-          showToast('글 작성에 성공했어요!');
-          EasyLoading.showSuccess('작성 성공!');
-          isPosting = false;
-          Get.back();
-        } else {
-          showToast('글 작성에 실패했어요. 다시 시도해주세요!');
-          isPosting = false;
-          EasyLoading.showError('작성 실패');
-        }
-      } catch (e) {
+
+    for (var controller in _textControllers) {
+      if (controller.text.trim().isEmpty) {
+        showToast('모든 페이지의 글 내용을 입력해주세요!');
+        return;
+      }
+    }
+
+    try {
+      EasyLoading.show(status: '로딩중...');
+      isPosting = true;
+      final response = await postStoryPost(
+          _textControllers.map((e) => e.text.trim()).toList(),
+          pc.imageId.value);
+
+      if (response != null) {
+        showToast('글 작성에 성공했어요!');
+        EasyLoading.showSuccess('작성 성공!');
+      } else {
         showToast('글 작성에 실패했어요. 다시 시도해주세요!');
-        isPosting = false;
         EasyLoading.showError('작성 실패');
       }
+    } catch (e) {
+      showToast('글 작성에 실패했어요. 다시 시도해주세요!');
+      EasyLoading.showError('작성 실패');
+    } finally {
+      isPosting = false;
+    }
+
+    if (!isPosting) {
+      Get.back();
     }
   }
 

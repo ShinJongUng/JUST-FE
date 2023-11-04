@@ -19,6 +19,7 @@ class SinglePostPage extends StatelessWidget {
         title: const Text('작성 글'),
       ),
       body: StoryBuilderWidget(
+          postId: 1,
           numbersOfComments: arguments.numbersOfComments,
           numbersOfLikes: arguments.numbersOfLikes,
           bgImageId: arguments.bgImageId,

@@ -16,7 +16,7 @@
                 <!-- 카카오 로그인 Redirect URI -->
                 <data android:scheme="kakaodad63e43a8ce025715c3181d98cbf26c" android:host="oauth"/>
             </intent-filter>
-            </activity>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -39,6 +39,7 @@ class LoginPage extends StatelessWidget {
         lc.accessToken = accessToken;
         Get.Get.offAllNamed('/');
       } catch (e) {
+        print(e);
         showToast('로그인 도중 문제가 발생하였습니다.');
       }
     }

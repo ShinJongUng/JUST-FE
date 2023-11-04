@@ -12,6 +12,7 @@ class StoryFrameWidget extends StatefulWidget {
   final Widget userPost;
   final int postLength;
   final int selectPage;
+  final int postId;
 
   const StoryFrameWidget(
       {super.key,
@@ -19,7 +20,8 @@ class StoryFrameWidget extends StatefulWidget {
       required this.numbersOfLikes,
       required this.userPost,
       required this.postLength,
-      required this.selectPage});
+      required this.selectPage,
+      required this.postId});
 
   @override
   State<StoryFrameWidget> createState() => _StoryFrameWidgetState();

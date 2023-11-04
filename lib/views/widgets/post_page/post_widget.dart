@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:just/getX/post_write_controller.dart';
 
 class PostWidget extends StatefulWidget {
   final int currentPage;
@@ -31,11 +33,9 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
-  int _currentImageId = 1;
+  final PostWriteController lc = Get.put(PostWriteController());
   void _updateImage(int imageId) {
-    setState(() {
-      _currentImageId = imageId;
-    });
+    lc.setImageId(imageId);
   }
 
   void _showImagePickerBottomSheet(BuildContext context) {
@@ -89,7 +89,7 @@ class _PostWidgetState extends State<PostWidget> {
         child: Stack(children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/test$_currentImageId.jpg',
+              'assets/test${lc.imageId}.jpg',
               fit: BoxFit.cover,
             ),
           ),

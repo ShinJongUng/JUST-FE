@@ -32,6 +32,13 @@ class PostController extends GetxController {
     _isLoading.value = false;
   }
 
+  void refreshPosts() async {
+    posts.clear();
+    viewedPosts.clear();
+    _hasNextPage = true;
+    fetchPosts();
+  }
+
   bool get hasNextPage => _hasNextPage;
   bool get isLoading => _isLoading.value;
 }

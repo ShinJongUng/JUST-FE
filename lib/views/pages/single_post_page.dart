@@ -16,7 +16,6 @@ class SinglePostPage extends StatelessWidget {
         centerTitle: false,
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        title: const Text('작성 글'),
       ),
       body: StoryBuilderWidget(
           postId: 1,

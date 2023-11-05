@@ -135,7 +135,8 @@ class _StoryFrameWidgetState extends State<StoryFrameWidget> {
                         number: widget.numbersOfLikes,
                         onPressed: onPressFavorite),
                     CommentSheetButton(
-                        numbersOfComments: widget.numbersOfComments),
+                        numbersOfComments: widget.numbersOfComments,
+                        postId: widget.postId),
                   ]),
             ),
           )

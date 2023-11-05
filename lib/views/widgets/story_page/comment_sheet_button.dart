@@ -4,7 +4,9 @@ import 'package:just/views/widgets/story_page/icon_button.dart';
 
 class CommentSheetButton extends StatelessWidget {
   final int numbersOfComments;
-  const CommentSheetButton({super.key, required this.numbersOfComments});
+  final int postId;
+  const CommentSheetButton(
+      {super.key, required this.numbersOfComments, required this.postId});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class CommentSheetButton extends StatelessWidget {
                 builder:
                     (BuildContext context, ScrollController scrollController) {
                   return CommentSheetModal(
+                      postId: postId,
                       scrollController: scrollController,
                       draggableScrollableController:
                           draggableScrollableController);

@@ -33,6 +33,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final Future<void> _isDeviceLoggedInFuture = isDeviceLogin();
+
   @override
   void initState() {
     Get.put(LoginController());
@@ -40,7 +42,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-  void isDeviceLogin() async {
+  static Future<void> isDeviceLogin() async {
     const storage = FlutterSecureStorage();
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -48,6 +50,7 @@ class _MyAppState extends State<MyApp> {
     final String? accessToken = await storage.read(key: 'access-token');
     final String? nickName = prefs.getString('nick-name');
     final LoginController lc = Get.put(LoginController());
+    print(lc.accessToken);
     if ((platform == 'kakao' || platform == 'apple') && accessToken != null) {
       lc.registerNickname(nickName);
       lc.registerAccessToken(accessToken);
@@ -63,7 +66,19 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       theme: ThemeData.dark(),
       darkTheme: ThemeData.dark(),
-      initialRoute: "/",
+      home: FutureBuilder<void>(
+        future: _isDeviceLoggedInFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+          return const HomePage();
+        },
+      ),
       getPages: [
         GetPage(name: "/", page: () => const HomePage()),
         GetPage(name: "/post", page: () => const PostPage()),

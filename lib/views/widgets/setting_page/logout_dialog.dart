@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just/getX/login_controller.dart';
+import 'package:just/getX/post_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -22,7 +23,10 @@ class LogoutDialog extends StatelessWidget {
     }
 
     final LoginController lc = Get.put(LoginController());
+    final PostController pc = Get.put(PostController());
+
     lc.logout();
+    pc.refreshPosts();
     Get.offAllNamed('/');
   }
 

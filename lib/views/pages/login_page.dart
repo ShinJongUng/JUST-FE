@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' as Get;
 import 'package:just/getX/login_controller.dart';
+import 'package:just/getX/post_controller.dart';
 import 'package:just/models/login_model.dart';
 import 'package:just/services/post_login.dart';
 import 'package:just/views/widgets/utils/show_toast.dart';
@@ -34,9 +35,12 @@ class LoginPage extends StatelessWidget {
         }
 
         final LoginController lc = Get.Get.put(LoginController());
+        final PostController pc = Get.Get.put(PostController());
+
         lc.login();
         lc.nickname = response.data['nickname'];
         lc.accessToken = accessToken;
+        pc.refreshPosts();
         Get.Get.offAllNamed('/');
       } catch (e) {
         print(e);

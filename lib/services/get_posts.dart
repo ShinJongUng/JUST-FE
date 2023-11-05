@@ -11,9 +11,14 @@ Future<PostsResponse?> getPosts(int requestPage, List<int>? viewedPosts) async {
     if (viewedPosts!.isNotEmpty) {
       dio.options.headers["viewed"] = viewedPosts.join(",");
     }
+    if (lc.isLogin && lc.accessToken.isNotEmpty) {
+      dio.options.headers["Authorization"] = "Bearer ${lc.accessToken}";
+    }
 
     final response = await dio.get(
-      '/get/post',
+      lc.isLogin && lc.accessToken.isNotEmpty
+          ? '/get/member/post'
+          : '/get/post',
       queryParameters: {'request_page': requestPage},
     );
 

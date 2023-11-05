@@ -9,6 +9,7 @@ class Post {
   final int likeCount;
   final int blamedCount;
   final List<String> postContents;
+  bool like = false;
 
   Post({
     required this.postId,
@@ -21,6 +22,7 @@ class Post {
     required this.likeCount,
     required this.blamedCount,
     required this.postContents,
+    this.like = false,
   });
 
   factory Post.fromJson(Map<String, dynamic> json) {
@@ -33,8 +35,9 @@ class Post {
       postContents: json['post_content'].cast<String>(),
       postCategory: json['post_category'],
       commentCount: json['comment_size'],
-      likeCount: json['post_like'],
+      likeCount: json['post_like_size'],
       blamedCount: json['blamed_count'],
+      like: json['like'] ?? false,
     );
   }
 }

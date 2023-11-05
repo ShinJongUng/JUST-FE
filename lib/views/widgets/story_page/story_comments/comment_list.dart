@@ -1,20 +1,5 @@
 import 'package:flutter/material.dart';
-
-class Comment {
-  final String profileImage;
-  final String username;
-  final DateTime timestamp;
-  final String text;
-  final List<Comment>? replies;
-
-  Comment({
-    required this.profileImage,
-    required this.username,
-    required this.timestamp,
-    required this.text,
-    this.replies,
-  });
-}
+import 'package:just/models/comment_model.dart';
 
 class CommentWidget extends StatefulWidget {
   final Comment comment;
@@ -34,8 +19,8 @@ class _CommentWidgetState extends State<CommentWidget> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            backgroundImage: AssetImage(widget.comment.profileImage),
+          const CircleAvatar(
+            child: Icon(Icons.person),
           ),
           const SizedBox(width: 8.0),
           Expanded(
@@ -77,7 +62,7 @@ class CommentList extends StatelessWidget {
     return Expanded(
       child: ListView.builder(
         controller: scrollController,
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         itemCount: comments.length,
         itemBuilder: (context, index) {
           final comment = comments[index];

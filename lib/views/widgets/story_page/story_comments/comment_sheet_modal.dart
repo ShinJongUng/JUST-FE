@@ -9,12 +9,14 @@ class CommentSheetModal extends StatefulWidget {
   final ScrollController scrollController;
   final DraggableScrollableController draggableScrollableController;
   final int postId;
+  final Function increaseCommentCount;
 
   const CommentSheetModal({
     super.key,
     required this.scrollController,
     required this.draggableScrollableController,
     required this.postId,
+    required this.increaseCommentCount,
   });
 
   @override
@@ -23,12 +25,24 @@ class CommentSheetModal extends StatefulWidget {
 
 class _CommentSheetModalState extends State<CommentSheetModal> {
   Future<List<Comment>>? commentsFuture;
+  int selectedCommentId = -1;
 
   @override
   void initState() {
     super.initState();
-    // Initialize the comments future when the state is first created
     commentsFuture = getComments(widget.postId);
+  }
+
+  void changeSelectedCommentId(int commentId) {
+    setState(() {
+      selectedCommentId = commentId;
+    });
+  }
+
+  void refreshComments() async {
+    setState(() {
+      commentsFuture = getComments(widget.postId);
+    });
   }
 
   @override
@@ -56,11 +70,21 @@ class _CommentSheetModalState extends State<CommentSheetModal> {
                       return Text('Error: ${snapshot.error}');
                     } else if (snapshot.hasData) {
                       if (snapshot.data!.isEmpty) {
-                        return const Expanded(
-                            child: SizedBox(
-                                child: Center(child: Text('댓글이 없어요.'))));
+                        return Expanded(
+                            child: ListView(
+                          controller: widget.scrollController,
+                          physics: const ClampingScrollPhysics(),
+                          children: const [
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Center(child: Text('댓글이 없어요.')),
+                          ],
+                        ));
                       }
                       return CommentList(
+                        changeSelectedCommentId: changeSelectedCommentId,
+                        selectedCommentId: selectedCommentId,
                         comments: snapshot.data!,
                         scrollController: widget.scrollController,
                       );
@@ -70,8 +94,13 @@ class _CommentSheetModalState extends State<CommentSheetModal> {
                   },
                 ),
                 CommentTextField(
+                    changeSelectedCommentId: changeSelectedCommentId,
+                    selectedCommentId: selectedCommentId,
+                    onRefreshComments: refreshComments,
+                    postId: widget.postId,
                     draggableScrollableController:
-                        widget.draggableScrollableController),
+                        widget.draggableScrollableController,
+                    increaseCommentCount: widget.increaseCommentCount),
               ],
             ),
           ),

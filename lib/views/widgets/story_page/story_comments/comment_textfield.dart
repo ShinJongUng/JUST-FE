@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:just/getX/login_controller.dart';
+import 'package:just/models/comment_model.dart';
+import 'package:just/services/get_comments.dart';
+import 'package:just/services/post_comment.dart';
 import 'package:just/views/widgets/utils/login_dialog.dart';
 
 class CommentTextField extends StatefulWidget {
   DraggableScrollableController draggableScrollableController;
-  CommentTextField({
-    super.key,
-    required this.draggableScrollableController,
-  });
+  int postId;
+  final Function onRefreshComments;
+  final Function increaseCommentCount;
+  final int selectedCommentId;
+  final Function changeSelectedCommentId;
+
+  CommentTextField(
+      {super.key,
+      required this.draggableScrollableController,
+      required this.changeSelectedCommentId,
+      required this.selectedCommentId,
+      required this.postId,
+      required this.onRefreshComments,
+      required this.increaseCommentCount});
 
   @override
   State<CommentTextField> createState() => _CommentTextFieldState();
@@ -19,12 +33,24 @@ class _CommentTextFieldState extends State<CommentTextField> {
   bool _isTextEmpty = true;
   final LoginController lc = Get.put(LoginController());
 
-  void onPressCommentSend() {
-    _textController.clear();
+  void onPressCommentSend() async {
     FocusManager.instance.primaryFocus?.unfocus();
+
+    EasyLoading.show(status: '댓글 작성중...');
+    final response = await postComment(widget.postId, _textController.text,
+        widget.selectedCommentId == -1 ? 0 : widget.selectedCommentId);
+    if (response?.statusCode != 200) {
+      EasyLoading.showError('댓글 작성 실패!');
+      return;
+    }
+    _textController.clear();
     setState(() {
       _isTextEmpty = true;
     });
+    widget.increaseCommentCount();
+    await widget.onRefreshComments();
+    widget.changeSelectedCommentId(-1);
+    EasyLoading.showSuccess('댓글 작성 완료!');
   }
 
   void onTextFieldTap() {

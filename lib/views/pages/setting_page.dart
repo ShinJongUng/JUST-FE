@@ -12,22 +12,22 @@ class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('설정'),
+        title: const Text('설정'),
       ),
       body: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
           ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('로그아웃'),
+            leading: const Icon(Icons.logout),
+            title: const Text('로그아웃'),
             onTap: () {
               showDialog(
                   context: context, builder: (context) => const LogoutDialog());
             },
           ),
           ListTile(
-            leading: Icon(Icons.privacy_tip),
-            title: Text('개인정보 처리방침'),
+            leading: const Icon(Icons.privacy_tip),
+            title: const Text('개인정보 처리방침'),
             onTap: () {
               Get.to(() => const WebViewScreen(
                   url:
@@ -36,8 +36,8 @@ class SettingPage extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.delete_forever_rounded),
-            title: Text('회원 탈퇴'),
+            leading: const Icon(Icons.delete_forever_rounded),
+            title: const Text('회원 탈퇴'),
             onTap: () {
               showDialog(
                   context: context,

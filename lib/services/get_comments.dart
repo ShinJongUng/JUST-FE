@@ -13,7 +13,7 @@ Future<List<Comment>> getComments(int postId) async {
   final response = await dio.get('/get/$postId/comments');
 
   if (response.statusCode == 200) {
-    List<dynamic> jsonComments = response.data;
+    List<dynamic> jsonComments = response.data["comments"];
     Map<int, Comment> commentsMap = {};
 
     for (var jsonComment in jsonComments) {

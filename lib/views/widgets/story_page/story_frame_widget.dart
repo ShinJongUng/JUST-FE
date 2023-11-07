@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just/getX/login_controller.dart';
+import 'package:just/services/post_post_like.dart';
 import 'package:just/views/widgets/story_page/comment_sheet_button.dart';
 import 'package:just/views/widgets/story_page/icon_button.dart';
 import 'package:just/views/widgets/utils/login_dialog.dart';
@@ -13,9 +14,11 @@ class StoryFrameWidget extends StatefulWidget {
   final int postLength;
   final int selectPage;
   final int postId;
+  final bool isLike;
 
   const StoryFrameWidget(
       {super.key,
+      required this.isLike,
       required this.numbersOfComments,
       required this.numbersOfLikes,
       required this.userPost,
@@ -28,13 +31,27 @@ class StoryFrameWidget extends StatefulWidget {
 }
 
 class _StoryFrameWidgetState extends State<StoryFrameWidget> {
-  bool _isLiked = false;
+  late bool _isLiked = false;
+  late int likeCount = 0;
 
-  void onPressFavorite() {
+  @override
+  void initState() {
+    super.initState();
+    _isLiked = widget.isLike;
+    likeCount = widget.numbersOfLikes;
+  }
+
+  void onPressFavorite() async {
     final LoginController lc = Get.put(LoginController());
     if (!lc.isLogin) {
       showDialog(context: context, builder: (context) => const LoginDialog());
       return;
+    }
+    await postPostLike(widget.postId, _isLiked);
+    if (_isLiked) {
+      likeCount--;
+    } else {
+      likeCount++;
     }
     setState(() {
       _isLiked = !_isLiked;
@@ -132,7 +149,7 @@ class _StoryFrameWidgetState extends State<StoryFrameWidget> {
                     CustomIconButton(
                         icon: _isLiked ? Icons.favorite : Icons.favorite_border,
                         color: _isLiked ? Colors.red : Colors.white,
-                        number: widget.numbersOfLikes,
+                        number: likeCount,
                         onPressed: onPressFavorite),
                     CommentSheetButton(
                         numbersOfComments: widget.numbersOfComments,

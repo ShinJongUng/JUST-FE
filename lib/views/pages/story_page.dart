@@ -61,6 +61,7 @@ class _StoryPageState extends State<StoryPage> {
             final post = postController.posts[index];
             return StoryBuilderWidget(
               postId: post.postId,
+              isLike: post.like,
               numbersOfComments: post.commentCount,
               numbersOfLikes: post.likeCount,
               bgImageId: post.postPicture,

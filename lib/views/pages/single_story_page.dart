@@ -18,8 +18,9 @@ class SinglePostPage extends StatelessWidget {
         elevation: 0.0,
       ),
       body: StoryBuilderWidget(
-          postId: 1,
-          isLike: false,
+          storyType: "single",
+          postId: arguments.postId,
+          isLike: arguments.like,
           numbersOfComments: arguments.numbersOfComments,
           numbersOfLikes: arguments.numbersOfLikes,
           bgImageId: arguments.bgImageId,

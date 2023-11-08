@@ -13,7 +13,7 @@ class StoryPage extends StatefulWidget {
 
 class _StoryPageState extends State<StoryPage> {
   late final PostController postController;
-  final PageController _pageController = PageController();
+  final PageController _pageController = PageController(keepPage: true);
 
   @override
   void initState() {
@@ -60,6 +60,8 @@ class _StoryPageState extends State<StoryPage> {
           itemBuilder: (context, index) {
             final post = postController.posts[index];
             return StoryBuilderWidget(
+              key: ValueKey(post.postId),
+              storyType: "multiple",
               postId: post.postId,
               isLike: post.like,
               numbersOfComments: post.commentCount,

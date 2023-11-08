@@ -1,16 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:just/models/post_arguments.dart';
 
 class UserCommentWidget extends StatelessWidget {
   final String comments;
+  final List<String> postContents;
+  final int numbersOfComments;
+  final int numbersOfLikes;
+  final String timeString;
+  final int bgImageId;
+  final int postId;
+  final bool like;
 
-  const UserCommentWidget({super.key, required this.comments});
+  const UserCommentWidget(
+      {super.key,
+      required this.comments,
+      required this.postId,
+      required this.numbersOfComments,
+      required this.numbersOfLikes,
+      required this.timeString,
+      required this.bgImageId,
+      required this.postContents,
+      required this.like});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed('/user-post'),
+      onTap: () => Get.toNamed('/single-post',
+          arguments: PostArguments(
+            postId: postId,
+            bgImageId: bgImageId,
+            pagesText: postContents,
+            numbersOfComments: numbersOfComments,
+            numbersOfLikes: numbersOfLikes,
+            like: like,
+          )),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: SizedBox(

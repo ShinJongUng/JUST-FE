@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just/getX/login_controller.dart';
+import 'package:just/getX/post_controller.dart';
 import 'package:just/services/post_post_like.dart';
 import 'package:just/views/widgets/story_page/comment_sheet_button.dart';
 import 'package:just/views/widgets/story_page/icon_button.dart';
@@ -15,9 +16,11 @@ class StoryFrameWidget extends StatefulWidget {
   final int selectPage;
   final int postId;
   final bool isLike;
+  final String storyType;
 
   const StoryFrameWidget(
       {super.key,
+      required this.storyType,
       required this.isLike,
       required this.numbersOfComments,
       required this.numbersOfLikes,
@@ -33,7 +36,6 @@ class StoryFrameWidget extends StatefulWidget {
 class _StoryFrameWidgetState extends State<StoryFrameWidget> {
   late bool _isLiked = false;
   late int likeCount = 0;
-
   @override
   void initState() {
     super.initState();
@@ -43,19 +45,25 @@ class _StoryFrameWidgetState extends State<StoryFrameWidget> {
 
   void onPressFavorite() async {
     final LoginController lc = Get.put(LoginController());
+    final PostController pc = Get.put(PostController());
+
     if (!lc.isLogin) {
       showDialog(context: context, builder: (context) => const LoginDialog());
       return;
     }
-    await postPostLike(widget.postId, _isLiked);
-    if (_isLiked) {
-      likeCount--;
+    if (widget.storyType == "single") {
+      await postPostLike(widget.postId, _isLiked);
+      if (_isLiked) {
+        likeCount--;
+      } else {
+        likeCount++;
+      }
+      setState(() {
+        _isLiked = !_isLiked;
+      });
     } else {
-      likeCount++;
+      pc.toggleLike(widget.postId, !widget.isLike);
     }
-    setState(() {
-      _isLiked = !_isLiked;
-    });
   }
 
   @override
@@ -147,11 +155,26 @@ class _StoryFrameWidgetState extends State<StoryFrameWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomIconButton(
-                        icon: _isLiked ? Icons.favorite : Icons.favorite_border,
-                        color: _isLiked ? Colors.red : Colors.white,
-                        number: likeCount,
+                        icon: widget.storyType == "single"
+                            ? _isLiked
+                                ? Icons.favorite
+                                : Icons.favorite_border
+                            : widget.isLike
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                        color: widget.storyType == "single"
+                            ? _isLiked
+                                ? Colors.red
+                                : Colors.white
+                            : widget.isLike
+                                ? Colors.red
+                                : Colors.white,
+                        number: widget.storyType == "single"
+                            ? likeCount
+                            : widget.numbersOfLikes,
                         onPressed: onPressFavorite),
                     CommentSheetButton(
+                        storyType: widget.storyType,
                         numbersOfComments: widget.numbersOfComments,
                         postId: widget.postId),
                   ]),

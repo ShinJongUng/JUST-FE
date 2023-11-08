@@ -131,15 +131,12 @@ class _PostPageState extends State<PostPage> {
           pc.imageId.value);
 
       if (response != null) {
-        showToast('글 작성에 성공했어요!');
-        EasyLoading.showSuccess('작성 성공!');
+        EasyLoading.showSuccess('글 작성 성공!');
       } else {
-        showToast('글 작성에 실패했어요. 다시 시도해주세요!');
-        EasyLoading.showError('작성 실패');
+        EasyLoading.showError('글 작성 실패');
       }
     } catch (e) {
-      showToast('글 작성에 실패했어요. 다시 시도해주세요!');
-      EasyLoading.showError('작성 실패');
+      EasyLoading.showError('글 작성 실패');
     } finally {
       isPosting = false;
     }

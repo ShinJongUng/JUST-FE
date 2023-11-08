@@ -2,6 +2,7 @@
 import 'package:get/get.dart';
 import 'package:just/models/post_model.dart';
 import 'package:just/services/get_posts.dart';
+import 'package:just/services/post_post_like.dart';
 
 class PostController extends GetxController {
   final RxList<int> viewedPosts = <int>[].obs;
@@ -37,6 +38,24 @@ class PostController extends GetxController {
     viewedPosts.clear();
     _hasNextPage = true;
     fetchPosts();
+  }
+
+  void toggleLike(int postId, bool isLike) async {
+    var postIndex = posts.indexWhere((post) => post.postId == postId);
+    if (postIndex != -1) {
+      posts[postIndex].like = isLike;
+      await postPostLike(postId, isLike);
+      isLike ? posts[postIndex].likeCount++ : posts[postIndex].likeCount--;
+      posts.refresh();
+    }
+  }
+
+  void increaseCommentCount(int postId) {
+    var postIndex = posts.indexWhere((post) => post.postId == postId);
+    if (postIndex != -1) {
+      posts[postIndex].commentCount++;
+      posts.refresh();
+    }
   }
 
   bool get hasNextPage => _hasNextPage;

@@ -5,8 +5,8 @@ class Post {
   final String postCreateTime;
   final bool secret;
   final String postCategory;
-  final int commentCount;
-  final int likeCount;
+  int commentCount = 0;
+  int likeCount = 0;
   final int blamedCount;
   final List<String> postContents;
   bool like = false;

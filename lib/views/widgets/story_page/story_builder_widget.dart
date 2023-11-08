@@ -9,6 +9,7 @@ class StoryBuilderWidget extends StatefulWidget {
   final List<dynamic> pagesText;
   final int postId;
   final bool isLike;
+  final String storyType;
 
   const StoryBuilderWidget({
     super.key,
@@ -18,6 +19,7 @@ class StoryBuilderWidget extends StatefulWidget {
     required this.pagesText,
     required this.postId,
     required this.isLike,
+    required this.storyType,
   });
 
   @override
@@ -66,6 +68,7 @@ class _StoryBuilderWidgetState extends State<StoryBuilderWidget> {
   @override
   Widget build(BuildContext context) {
     return StoryFrameWidget(
+        storyType: widget.storyType,
         postId: widget.postId,
         isLike: widget.isLike,
         numbersOfComments: widget.numbersOfComments,

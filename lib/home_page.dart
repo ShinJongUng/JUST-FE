@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just/getX/login_controller.dart';
+import 'package:just/getX/post_controller.dart';
 import 'package:just/views/pages/post_page.dart';
 import 'package:just/views/pages/story_page.dart';
 import 'package:just/views/pages/user_info_page.dart';
@@ -17,6 +18,8 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   void _navigateBottomBar(int index) {
     final LoginController lc = Get.put(LoginController());
+    final PostController pc = Get.put(PostController());
+
     if (lc.isLogin == false) {
       if (index == 0) {
         return;
@@ -28,6 +31,9 @@ class _HomePageState extends State<HomePage> {
       Get.toNamed("/post");
 
       return;
+    }
+    if (index == 0) {
+      pc.refreshPosts();
     }
     setState(() {
       _selectedIndex = index;

@@ -2,27 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:just/models/post_arguments.dart';
+import 'package:just/utils/format_iso_string.dart';
 
 class UserPostWidget extends StatelessWidget {
   final String title;
+  final List<String> postContents;
   final int numbersOfComments;
   final int numbersOfLikes;
+  final String timeString;
+  final int bgImageId;
+  final int postId;
+  final bool like;
 
   const UserPostWidget(
       {super.key,
+      required this.postId,
       required this.title,
       required this.numbersOfComments,
-      required this.numbersOfLikes});
+      required this.numbersOfLikes,
+      required this.timeString,
+      required this.bgImageId,
+      required this.postContents,
+      required this.like});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.toNamed('/single-post',
           arguments: PostArguments(
-            bgImageId: 1,
-            pagesText: ['ddddddd', 'ddddddd'],
+            postId: postId,
+            bgImageId: bgImageId,
+            pagesText: postContents,
             numbersOfComments: numbersOfComments,
             numbersOfLikes: numbersOfLikes,
+            like: like,
           )),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -31,7 +44,7 @@ class UserPostWidget extends StatelessWidget {
           height: 80,
           child: Row(children: [
             Expanded(
-              child: Container(
+              child: SizedBox(
                 height: 80,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +62,7 @@ class UserPostWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          DateFormat('yyyy.MM.dd').format(DateTime.now()),
+                          parseAndFormatIso8601String(timeString),
                           style: const TextStyle(
                             fontSize: 14,
                           ),
@@ -87,7 +100,7 @@ class UserPostWidget extends StatelessWidget {
             SizedBox(
               width: 80,
               child: Image.asset(
-                'assets/test1.jpg',
+                'assets/test$bgImageId.jpg',
                 fit: BoxFit.cover,
               ),
             ),

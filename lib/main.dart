@@ -10,7 +10,7 @@ import 'package:just/views/pages/post_page.dart';
 import 'package:just/views/pages/search_page.dart';
 import 'package:just/views/pages/setting_page.dart';
 import 'package:just/views/pages/signup_page.dart';
-import 'package:just/views/pages/single_post_page.dart';
+import 'package:just/views/pages/single_story_page.dart';
 import 'package:just/views/pages/story_page.dart';
 import 'package:just/views/pages/user_info_page.dart';
 import 'package:just/views/pages/user_post_page.dart';

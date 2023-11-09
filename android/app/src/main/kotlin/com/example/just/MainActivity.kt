@@ -1,4 +1,4 @@
-package com.example.just
+package com.megabrain.just
 
 import io.flutter.embedding.android.FlutterActivity
 

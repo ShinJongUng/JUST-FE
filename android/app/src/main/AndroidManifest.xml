@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.just">
+    package="com.megabrain.just">
    <application
         android:label="just"
         android:name="${applicationName}"

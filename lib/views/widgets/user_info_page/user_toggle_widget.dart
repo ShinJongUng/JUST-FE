@@ -124,7 +124,7 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
                               scrollDirection: Axis.vertical,
                               padding: const EdgeInsets.only(bottom: 30.0),
                               key: const PageStorageKey('user_comments'),
-                              itemCount: 10,
+                              itemCount: snapshot.data!.length,
                               itemBuilder: (context, index) {
                                 PostWithComment commentPost =
                                     snapshot.data![index];

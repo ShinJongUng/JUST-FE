@@ -9,9 +9,10 @@ Future<List<Comment>> getComments(int postId) async {
   final dio = Dio(DioOptions().options);
   final LoginController lc = Get.Get.put(LoginController());
 
-  dio.options.headers["Authorization"] = "Bearer ${lc.accessToken}";
+  if (lc.accessToken.isNotEmpty) {
+    dio.options.headers["Authorization"] = "Bearer ${lc.accessToken}";
+  }
   final response = await dio.get('/get/$postId/comments');
-
   if (response.statusCode == 200) {
     List<dynamic> jsonComments = response.data["comments"];
     Map<int, Comment> commentsMap = {};

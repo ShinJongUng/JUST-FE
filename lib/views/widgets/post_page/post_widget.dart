@@ -55,7 +55,7 @@ class _PostWidgetState extends State<PostWidget> {
               Expanded(
                 child: GridView.builder(
                   padding: const EdgeInsets.all(10),
-                  itemCount: 4,
+                  itemCount: 11,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     crossAxisSpacing: 10,

@@ -19,7 +19,7 @@ packages:
     version: "2.4.0"
   asn1lib:
     dependency: transitive
-    description:`
+    description:
       name: asn1lib
       sha256: ab96a1cb3beeccf8145c52e449233fe68364c9641623acd3adad66f8184f1039
       url: "https://pub.dev"

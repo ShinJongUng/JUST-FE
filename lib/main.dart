@@ -50,7 +50,6 @@ class _MyAppState extends State<MyApp> {
     final String? accessToken = await storage.read(key: 'access-token');
     final String? nickName = prefs.getString('nick-name');
     final LoginController lc = Get.put(LoginController());
-    print(lc.accessToken);
     if ((platform == 'kakao' || platform == 'apple') && accessToken != null) {
       lc.registerNickname(nickName);
       lc.registerAccessToken(accessToken);

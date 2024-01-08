@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just/getX/post_controller.dart';
-import 'package:just/models/post_arguments.dart';
 import 'package:just/views/widgets/story_page/story_builder_widget.dart';
+import 'package:just/views/widgets/story_page/story_more.dart';
 
 class StoryPage extends StatefulWidget {
   const StoryPage({Key? key}) : super(key: key);
@@ -47,6 +47,31 @@ class _StoryPageState extends State<StoryPage> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         title: const Text('글'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.toNamed('/search');
+            },
+            icon: const Icon(Icons.search),
+          ),
+          IconButton(
+            onPressed: () {
+              showModalBottomSheet<void>(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16)),
+                ),
+                context: context,
+                showDragHandle: true,
+                builder: (BuildContext context) {
+                  return const StoryMore();
+                },
+              );
+            },
+            icon: const Icon(Icons.more_vert),
+          ),
+        ],
       ),
       body: Obx(() {
         if (postController.posts.isEmpty) {

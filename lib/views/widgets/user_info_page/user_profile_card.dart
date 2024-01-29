@@ -45,7 +45,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color.fromARGB(255, 48, 48, 48),
+      color: const Color.fromARGB(255, 28, 27, 31),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           vertical: 4.0,

@@ -75,7 +75,10 @@ class _StoryPageState extends State<StoryPage> {
       ),
       body: Obx(() {
         if (postController.posts.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+              child: CircularProgressIndicator(
+            color: Colors.greenAccent,
+          ));
         }
 
         return PageView.builder(

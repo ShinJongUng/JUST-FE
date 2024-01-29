@@ -65,7 +65,10 @@ class _CommentSheetModalState extends State<CommentSheetModal> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Expanded(
-                          child: Center(child: CircularProgressIndicator()));
+                          child: Center(
+                              child: CircularProgressIndicator(
+                        color: Colors.greenAccent,
+                      )));
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     } else if (snapshot.hasData) {

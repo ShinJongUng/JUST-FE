@@ -66,13 +66,16 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
       darkTheme: ThemeData.dark(),
+      color: Colors.greenAccent,
       home: FutureBuilder<void>(
         future: _isDeviceLoggedInFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return const Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  color: Colors.greenAccent,
+                ),
               ),
             );
           }

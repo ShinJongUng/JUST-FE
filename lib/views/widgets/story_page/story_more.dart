@@ -51,8 +51,38 @@ class _StoryMoreState extends State<StoryMore> {
                                     },
                                   ),
                                   RadioListTile(
-                                    title: Text("법적 문제"),
+                                    title: Text("상업적 광고 및 판매"),
                                     value: 3,
+                                    groupValue: _number,
+                                    onChanged: (int? value) {
+                                      setState(() {
+                                        _number = value!;
+                                      });
+                                    },
+                                  ),
+                                  RadioListTile(
+                                    title: Text("사회적 갈등 조장"),
+                                    value: 4,
+                                    groupValue: _number,
+                                    onChanged: (int? value) {
+                                      setState(() {
+                                        _number = value!;
+                                      });
+                                    },
+                                  ),
+                                  RadioListTile(
+                                    title: Text("욕설 및 비방"),
+                                    value: 5,
+                                    groupValue: _number,
+                                    onChanged: (int? value) {
+                                      setState(() {
+                                        _number = value!;
+                                      });
+                                    },
+                                  ),
+                                  RadioListTile(
+                                    title: Text("불쾌한 내용"),
+                                    value: 6,
                                     groupValue: _number,
                                     onChanged: (int? value) {
                                       setState(() {

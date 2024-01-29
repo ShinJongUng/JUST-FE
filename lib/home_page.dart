@@ -57,6 +57,7 @@ class _HomePageState extends State<HomePage> {
           type: BottomNavigationBarType.fixed,
           showSelectedLabels: false,
           showUnselectedLabels: false,
+          selectedItemColor: Colors.greenAccent,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.filter_none),

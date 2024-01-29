@@ -36,30 +36,34 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
   Widget build(BuildContext context) {
     return StickyHeader(
       header: Container(
-        color: const Color.fromARGB(255, 48, 48, 48),
-        child: TabBar(controller: _tabController, tabs: [
-          Container(
-            height: 40,
-            alignment: Alignment.center,
-            child: const Text(
-              '작성 글',
-            ),
-          ),
-          Container(
-            height: 40,
-            alignment: Alignment.center,
-            child: const Text(
-              '작성 댓글',
-            ),
-          ),
-          Container(
-            height: 40,
-            alignment: Alignment.center,
-            child: const Text(
-              '좋아요한 글',
-            ),
-          ),
-        ]),
+        color: const Color.fromARGB(255, 28, 27, 31),
+        child: TabBar(
+            controller: _tabController,
+            labelColor: Colors.greenAccent,
+            indicatorColor: Colors.greenAccent,
+            tabs: [
+              Container(
+                height: 40,
+                alignment: Alignment.center,
+                child: const Text(
+                  '작성 글',
+                ),
+              ),
+              Container(
+                height: 40,
+                alignment: Alignment.center,
+                child: const Text(
+                  '작성 댓글',
+                ),
+              ),
+              Container(
+                height: 40,
+                alignment: Alignment.center,
+                child: const Text(
+                  '좋아요한 글',
+                ),
+              ),
+            ]),
       ),
       content: SizedBox(
         child: TabBarView(
@@ -73,7 +77,10 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
                       AsyncSnapshot<List<Post>> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Expanded(
-                          child: Center(child: CircularProgressIndicator()));
+                          child: Center(
+                              child: CircularProgressIndicator(
+                        color: Colors.greenAccent,
+                      )));
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
@@ -115,7 +122,10 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
                       AsyncSnapshot<List<PostWithComment>> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Expanded(
-                          child: Center(child: CircularProgressIndicator()));
+                          child: Center(
+                              child: CircularProgressIndicator(
+                        color: Colors.greenAccent,
+                      )));
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
@@ -159,7 +169,10 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
                       AsyncSnapshot<List<Post>> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Expanded(
-                          child: Center(child: CircularProgressIndicator()));
+                          child: Center(
+                              child: CircularProgressIndicator(
+                        color: Colors.greenAccent,
+                      )));
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {

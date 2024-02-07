@@ -22,7 +22,7 @@ class CommentWidget extends StatefulWidget {
 }
 
 class _CommentWidgetState extends State<CommentWidget> {
-  LoginController lc = Get.put(LoginController());
+  LoginController lc = Get.find();
 
   @override
   Widget build(BuildContext context) {

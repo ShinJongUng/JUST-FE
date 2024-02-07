@@ -33,9 +33,9 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
-  final PostWriteController lc = Get.put(PostWriteController());
+  final PostWriteController pwc = Get.put(PostWriteController());
   void _updateImage(int imageId) {
-    lc.setImageId(imageId);
+    pwc.setImageId(imageId);
   }
 
   void _showImagePickerBottomSheet(BuildContext context) {
@@ -91,7 +91,7 @@ class _PostWidgetState extends State<PostWidget> {
         child: Stack(children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/background/background${lc.imageId}.jpg',
+              'assets/background/background${pwc.imageId}.jpg',
               fit: BoxFit.cover,
             ),
           ),

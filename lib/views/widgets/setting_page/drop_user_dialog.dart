@@ -23,7 +23,7 @@ class DropUserDialog extends StatelessWidget {
       print(e);
     }
 
-    final LoginController lc = Get.put(LoginController());
+    final LoginController lc = Get.find();
     lc.logout();
     Get.offAllNamed('/');
   }

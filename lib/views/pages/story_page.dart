@@ -18,7 +18,7 @@ class _StoryPageState extends State<StoryPage> {
   @override
   void initState() {
     super.initState();
-    postController = Get.put(PostController());
+    postController = Get.find();
     _pageController.addListener(_scrollListener);
   }
 

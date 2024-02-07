@@ -15,7 +15,7 @@ class UserProfileCard extends StatefulWidget {
 }
 
 class _UserProfileCardState extends State<UserProfileCard> {
-  final LoginController lc = Get.put(LoginController());
+  final LoginController lc = Get.find();
 
   void changeUsernameState(String value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

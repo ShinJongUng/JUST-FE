@@ -44,8 +44,8 @@ class _StoryFrameWidgetState extends State<StoryFrameWidget> {
   }
 
   void onPressFavorite() async {
-    final LoginController lc = Get.put(LoginController());
-    final PostController pc = Get.put(PostController());
+    final LoginController lc = Get.find();
+    final PostController pc = Get.find();
 
     if (!lc.isLogin) {
       showDialog(context: context, builder: (context) => const LoginDialog());

@@ -35,7 +35,7 @@ class _CommentSheetButtonState extends State<CommentSheetButton> {
           commentsCount++;
         });
       } else {
-        final PostController pc = Get.put(PostController());
+        final PostController pc = Get.find();
         pc.increaseCommentCount(widget.postId);
       }
     }

@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:just/getX/login_controller.dart';
-import 'package:just/models/comment_model.dart';
-import 'package:just/services/get_comments.dart';
 import 'package:just/services/post_comment.dart';
 import 'package:just/views/widgets/utils/login_dialog.dart';
 
 class CommentTextField extends StatefulWidget {
-  DraggableScrollableController draggableScrollableController;
-  int postId;
+  final DraggableScrollableController draggableScrollableController;
+  final int postId;
   final Function onRefreshComments;
   final Function increaseCommentCount;
   final int selectedCommentId;
   final Function changeSelectedCommentId;
 
-  CommentTextField(
+  const CommentTextField(
       {super.key,
       required this.draggableScrollableController,
       required this.changeSelectedCommentId,
@@ -31,7 +29,7 @@ class CommentTextField extends StatefulWidget {
 class _CommentTextFieldState extends State<CommentTextField> {
   final _textController = TextEditingController();
   bool _isTextEmpty = true;
-  final LoginController lc = Get.put(LoginController());
+  final LoginController lc = Get.find();
 
   void onPressCommentSend() async {
     FocusManager.instance.primaryFocus?.unfocus();

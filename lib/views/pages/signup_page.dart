@@ -34,7 +34,7 @@ class SignUpPage extends StatelessWidget {
           await storage.write(key: 'refresh-token', value: refreshToken);
         }
 
-        final LoginController lc = Get.Get.put(LoginController());
+        final LoginController lc = Get.Get.find();
         lc.login();
         isLoading = false;
         lc.registerNickname(_textController.text);

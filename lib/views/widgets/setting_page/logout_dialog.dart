@@ -22,8 +22,8 @@ class LogoutDialog extends StatelessWidget {
       print(e);
     }
 
-    final LoginController lc = Get.put(LoginController());
-    final PostController pc = Get.put(PostController());
+    final LoginController lc = Get.find();
+    final PostController pc = Get.find();
 
     lc.logout();
     pc.refreshPosts();

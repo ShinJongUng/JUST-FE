@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:get/get.dart';
+import 'package:just/views/widgets/utils/show_toast.dart';
 
 class StoryMore extends StatefulWidget {
   const StoryMore({super.key});
@@ -9,6 +11,27 @@ class StoryMore extends StatefulWidget {
 }
 
 class _StoryMoreState extends State<StoryMore> {
+  void _sendEmail() async {
+    final Email email = Email(
+      body: '',
+      subject: '[Just 의견 보내기]',
+      recipients: ['whddnd0728@gmail.com'],
+      cc: [],
+      bcc: [],
+      attachmentPaths: [],
+      isHTML: false,
+    );
+
+    try {
+      await FlutterEmailSender.send(email);
+    } catch (error) {
+      print(error);
+      String title =
+          "기본 메일 앱을 사용할 수 없기 때문에 앱에서 바로 문의를 전송하기 어려운 상황입니다.\n\n아래 이메일로 연락주시면 친절하게 답변해드릴게요 :)\n\nwhddnd0728@gmail.com";
+      showToast(title);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -126,7 +149,9 @@ class _StoryMoreState extends State<StoryMore> {
             ListTile(
               leading: const Icon(Icons.warning),
               title: const Text('의견 보내기'),
-              onTap: () {},
+              onTap: () {
+                _sendEmail();
+              },
             ),
           ],
         ),

@@ -1,15 +1,9 @@
-import 'package:dio/dio.dart';
-import 'package:get/get.dart' as Get;
-import 'package:just/getX/login_controller.dart';
 import 'package:just/models/post_with_comment_model.dart';
-import 'package:just/utils/dio_options.dart';
+import 'package:just/services/dio_client.dart';
 
 Future<List<PostWithComment>> getMyCommentPosts() async {
   try {
-    final dio = Dio(DioOptions().options);
-    final LoginController lc = Get.Get.put(LoginController());
-
-    dio.options.headers["Authorization"] = "Bearer ${lc.accessToken}";
+    final dio = DioClient().dio;
 
     final response = await dio.get('/get/member/comment');
     if (response.statusCode == 200) {

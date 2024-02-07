@@ -39,6 +39,7 @@ class _PostWidgetState extends State<PostWidget> {
   }
 
   void _showImagePickerBottomSheet(BuildContext context) {
+    widget.textControllers.map((e) => e.clear());
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -62,7 +63,8 @@ class _PostWidgetState extends State<PostWidget> {
                     mainAxisSpacing: 10,
                   ),
                   itemBuilder: (context, index) {
-                    String imagePath = 'assets/test${index + 1}.jpg';
+                    String imagePath =
+                        'assets/background/background${index + 1}.jpg';
                     return GestureDetector(
                       onTap: () {
                         _updateImage(index + 1);
@@ -89,7 +91,7 @@ class _PostWidgetState extends State<PostWidget> {
         child: Stack(children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/test${lc.imageId}.jpg',
+              'assets/background/background${lc.imageId}.jpg',
               fit: BoxFit.cover,
             ),
           ),

@@ -1,25 +1,28 @@
 import 'package:dio/dio.dart';
-import 'package:get/get.dart' as Get;
+import 'package:get/get.dart';
 import 'package:just/getX/login_controller.dart';
 import 'package:just/models/post_model.dart';
-import 'package:just/utils/dio_options.dart';
+import 'package:just/services/dio_client.dart';
 
 Future<PostsResponse?> getPosts(int requestPage, List<int>? viewedPosts) async {
   try {
-    final dio = Dio(DioOptions().options);
-    final LoginController lc = Get.Get.put(LoginController());
-    if (viewedPosts!.isNotEmpty) {
-      dio.options.headers["viewed"] = viewedPosts.join(",");
-    }
-    if (lc.isLogin && lc.accessToken.isNotEmpty) {
-      dio.options.headers["Authorization"] = "Bearer ${lc.accessToken}";
+    final Dio dio = DioClient().dio;
+    final LoginController lc = Get.find();
+    String endpoint = lc.isLogin && lc.accessToken.isNotEmpty
+        ? '/get/member/post'
+        : '/get/post';
+
+    Map<String, dynamic> extraHeaders = {};
+    if (viewedPosts != null && viewedPosts.isNotEmpty) {
+      extraHeaders['viewed'] = viewedPosts.join(",");
     }
 
     final response = await dio.get(
-      lc.isLogin && lc.accessToken.isNotEmpty
-          ? '/get/member/post'
-          : '/get/post',
+      endpoint,
       queryParameters: {'request_page': requestPage},
+      options: Options(
+        headers: extraHeaders, // 'headers'를 통해 'viewed' 헤더 추가
+      ),
     );
 
     if (response.statusCode == 200) {

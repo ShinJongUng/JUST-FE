@@ -1,13 +1,10 @@
-import 'package:get/get.dart' as Get;
-import 'package:just/getX/login_controller.dart';
-import 'package:just/utils/dio_options.dart';
+import 'package:just/services/dio_client.dart';
 import 'package:dio/dio.dart';
 
 Future<Response?> postChangeNickname(String nickName) async {
   try {
-    final dio = Dio(DioOptions().options);
-    final LoginController lc = Get.Get.put(LoginController());
-    dio.options.headers["authorization"] = "Bearer ${lc.accessToken}";
+    final Dio dio = DioClient().dio;
+
     final response = await dio.post('/change/nickName', queryParameters: {
       "nickname": nickName,
     });

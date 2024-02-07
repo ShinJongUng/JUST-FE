@@ -61,7 +61,8 @@ class _UserProfileCardState extends State<UserProfileCard> {
               children: [
                 const CircleAvatar(
                   radius: 40.0,
-                  backgroundImage: AssetImage('assets/test1.jpg'),
+                  backgroundImage:
+                      AssetImage('assets/background/background1.jpg'),
                 ),
                 const SizedBox(width: 16.0),
                 Padding(

@@ -100,7 +100,7 @@ class UserPostWidget extends StatelessWidget {
             SizedBox(
               width: 80,
               child: Image.asset(
-                'assets/test$bgImageId.jpg',
+                'assets/background/background$bgImageId.jpg',
                 fit: BoxFit.cover,
               ),
             ),

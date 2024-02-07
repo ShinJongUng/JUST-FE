@@ -87,7 +87,7 @@ class _StoryBuilderWidgetState extends State<StoryBuilderWidget> {
                   opacity: 0.5,
                   fit: BoxFit.cover,
                   image: AssetImage(
-                      "assets/test${widget.bgImageId}.jpg"), // 배경 이미지
+                      "assets/background/background${widget.bgImageId}.jpg"), // 배경 이미지
                 ),
               ),
             ),

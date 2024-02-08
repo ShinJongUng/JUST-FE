@@ -18,6 +18,15 @@ class PlatformOkCancelDialog extends StatelessWidget {
       required this.cancelText,
       this.okTextColor = Colors.blue});
 
+  pressedOkButton() {
+    Get.back();
+    Get.back();
+  }
+
+  pressedCancelButton() {
+    Get.back();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (Platform.isIOS) {
@@ -26,17 +35,12 @@ class PlatformOkCancelDialog extends StatelessWidget {
         content: Text(content),
         actions: <Widget>[
           CupertinoDialogAction(
+            onPressed: pressedCancelButton,
             child: Text(cancelText),
-            onPressed: () {
-              Get.back();
-            },
           ),
           CupertinoDialogAction(
+            onPressed: pressedOkButton,
             child: Text(okText, style: TextStyle(color: okTextColor)),
-            onPressed: () {
-              Get.back();
-              Get.back();
-            },
           ),
         ],
       );
@@ -46,17 +50,12 @@ class PlatformOkCancelDialog extends StatelessWidget {
         content: Text(content),
         actions: <Widget>[
           TextButton(
+            onPressed: pressedOkButton,
             child: Text(okText),
-            onPressed: () {
-              Get.back();
-              Get.back();
-            },
           ),
           TextButton(
+            onPressed: pressedCancelButton,
             child: Text(cancelText),
-            onPressed: () {
-              Get.back();
-            },
           ),
         ],
       );

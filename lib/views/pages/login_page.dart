@@ -45,6 +45,13 @@ class LoginPage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.8,
               )),
           const SizedBox(height: 16.0),
+          TextButton(
+              onPressed: () {},
+              child: Text(
+                '로그인 하는데에 문제가 있나요?',
+                style: TextStyle(
+                    fontSize: 12, decoration: TextDecoration.underline),
+              ))
           // if (Platform.isIOS)
           //   ElevatedButton(
           //     onPressed: () {

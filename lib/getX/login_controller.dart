@@ -10,12 +10,12 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginController extends GetxController {
   var isLogin = false;
-  var nickname = '';
+  var nickname = ''.obs;
   String accessToken = '';
   login() => isLogin = true;
   logout() => isLogin = false;
   registerAccessToken(token) => accessToken = token;
-  registerNickname(name) => nickname = name;
+  registerNickname(name) => nickname.value = name;
   final FlutterSecureStorage storage = const FlutterSecureStorage();
   Future<void> signInWithKakao() async {
     try {

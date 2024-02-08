@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:just/services/dio_client.dart';
 
 Future<Response?> postKakaoLogin(String accessToken) async {
@@ -9,6 +10,7 @@ Future<Response?> postKakaoLogin(String accessToken) async {
     });
     return response;
   } catch (e) {
+    debugPrint(e.toString());
     return null;
   }
 }
@@ -21,6 +23,7 @@ Future<Response?> postAppleLogin(String idToken) async {
     });
     return response;
   } catch (e) {
+    debugPrint(e.toString());
     return null;
   }
 }

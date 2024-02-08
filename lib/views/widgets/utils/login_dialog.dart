@@ -9,6 +9,15 @@ class LoginDialog extends StatelessWidget {
     super.key,
   });
 
+  pressedOkButton() {
+    Get.back();
+    Get.toNamed('/login');
+  }
+
+  pressedCancelButton() {
+    Get.back();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (Platform.isIOS) {
@@ -17,17 +26,12 @@ class LoginDialog extends StatelessWidget {
         content: const Text("로그인 하시겠습니까?"),
         actions: <Widget>[
           CupertinoDialogAction(
+            onPressed: pressedOkButton,
             child: const Text("확인"),
-            onPressed: () {
-              Get.back();
-              Get.toNamed('/login');
-            },
           ),
           CupertinoDialogAction(
+            onPressed: pressedCancelButton,
             child: const Text("취소"),
-            onPressed: () {
-              Get.back();
-            },
           ),
         ],
       );
@@ -36,18 +40,8 @@ class LoginDialog extends StatelessWidget {
         title: const Text("로그인이 필요한 서비스입니다."),
         content: const Text("로그인 하시겠습니까?"),
         actions: <Widget>[
-          TextButton(
-            child: const Text("확인"),
-            onPressed: () {
-              Get.toNamed('/login');
-            },
-          ),
-          TextButton(
-            child: const Text("취소"),
-            onPressed: () {
-              Get.back();
-            },
-          ),
+          TextButton(onPressed: pressedOkButton, child: const Text("확인")),
+          TextButton(onPressed: pressedCancelButton, child: const Text("취소")),
         ],
       );
     }

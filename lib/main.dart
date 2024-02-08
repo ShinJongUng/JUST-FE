@@ -81,8 +81,20 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
-      darkTheme: ThemeData.dark(),
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Colors.greenAccent,
+        colorScheme: const ColorScheme.dark().copyWith(
+          primary: Colors.amber,
+          secondary: Colors.greenAccent,
+        ),
+      ),
+      darkTheme: ThemeData.dark().copyWith(
+        primaryColor: Colors.greenAccent,
+        colorScheme: const ColorScheme.dark().copyWith(
+          primary: Colors.amber,
+          secondary: Colors.greenAccent,
+        ),
+      ),
       color: Colors.greenAccent,
       home: FutureBuilder<void>(
         future: _isDeviceLoggedInFuture,

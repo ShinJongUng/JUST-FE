@@ -52,6 +52,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.2.19
   flutter_email_sender: ^6.0.2
+  textfield_tags: ^2.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

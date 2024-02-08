@@ -9,12 +9,12 @@ class LoginDialog extends StatelessWidget {
     super.key,
   });
 
-  pressedOkButton() {
+  void pressedOkButton() {
     Get.back();
     Get.toNamed('/login');
   }
 
-  pressedCancelButton() {
+  void pressedCancelButton() {
     Get.back();
   }
 

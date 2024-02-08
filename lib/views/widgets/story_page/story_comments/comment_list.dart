@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just/getX/login_controller.dart';
-import 'package:just/models/comment_model.dart';
+import 'package:just/models/story_comment_model.dart';
 
 class CommentWidget extends StatefulWidget {
-  final Comment comment;
+  final StoryComment comment;
   int selectedCommentId;
   final bool isReply;
   Function changeSelectedCommentId;
@@ -86,7 +86,7 @@ class _CommentWidgetState extends State<CommentWidget> {
 }
 
 class CommentList extends StatelessWidget {
-  final List<Comment> comments;
+  final List<StoryComment> comments;
   ScrollController scrollController;
   int selectedCommentId;
   final Function changeSelectedCommentId;

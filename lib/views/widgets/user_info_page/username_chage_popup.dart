@@ -29,12 +29,12 @@ class _UsernameChangePopupState extends State<UsernameChangePopup> {
     _nicknameController.text = lc.nickname.value;
   }
 
-  pressedChangeButton() {
+  void pressedChangeButton() {
     final newNickname = _nicknameController.text;
     changeUsernameState(newNickname);
   }
 
-  pressedCancelButton() {
+  void pressedCancelButton() {
     Get.back();
   }
 

@@ -30,6 +30,10 @@ class _StoryPageState extends State<StoryPage> {
     }
   }
 
+  void searchButton() {
+    Get.toNamed('/search');
+  }
+
   @override
   void dispose() {
     _pageController.removeListener(_scrollListener);
@@ -39,6 +43,20 @@ class _StoryPageState extends State<StoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    void pressedMoreButton() {
+      showModalBottomSheet<void>(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+        ),
+        context: context,
+        showDragHandle: true,
+        builder: (BuildContext context) {
+          return const StoryMore();
+        },
+      );
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
@@ -49,26 +67,11 @@ class _StoryPageState extends State<StoryPage> {
         title: const Text('글'),
         actions: [
           IconButton(
-            onPressed: () {
-              Get.toNamed('/search');
-            },
+            onPressed: searchButton,
             icon: const Icon(Icons.search),
           ),
           IconButton(
-            onPressed: () {
-              showModalBottomSheet<void>(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16)),
-                ),
-                context: context,
-                showDragHandle: true,
-                builder: (BuildContext context) {
-                  return const StoryMore();
-                },
-              );
-            },
+            onPressed: pressedMoreButton,
             icon: const Icon(Icons.more_vert),
           ),
         ],

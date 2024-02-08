@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:just/models/comment_model.dart';
-import 'package:just/services/get_comments.dart'; // Make sure this import is correct
+import 'package:just/models/story_comment_model.dart';
+import 'package:just/services/get_comments.dart';
 import 'package:just/views/widgets/story_page/story_comments/comment_list.dart';
 import 'package:just/views/widgets/story_page/story_comments/comment_sheet_header.dart';
 import 'package:just/views/widgets/story_page/story_comments/comment_textfield.dart';
@@ -24,7 +24,7 @@ class CommentSheetModal extends StatefulWidget {
 }
 
 class _CommentSheetModalState extends State<CommentSheetModal> {
-  Future<List<Comment>>? commentsFuture;
+  Future<List<StoryComment>>? commentsFuture;
   int selectedCommentId = -1;
 
   @override
@@ -60,7 +60,14 @@ class _CommentSheetModalState extends State<CommentSheetModal> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 const CommentSheetHeader(),
-                FutureBuilder<List<Comment>>(
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16, top: 4),
+                  child: Container(
+                    height: 1,
+                    color: Colors.grey,
+                  ),
+                ),
+                FutureBuilder<List<StoryComment>>(
                   future: commentsFuture,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {

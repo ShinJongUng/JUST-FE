@@ -18,6 +18,7 @@ class CommentSheetHeader extends StatelessWidget {
                 size: 18,
               )),
         ),
+        leading: const SizedBox(width: 10),
         title: const Text(
           "댓글",
           textAlign: TextAlign.center,

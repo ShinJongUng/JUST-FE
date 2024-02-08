@@ -1,54 +1,21 @@
-import 'package:just/models/comment_model.dart';
-import 'package:just/services/dio_client.dart';
+import 'package:just/models/story_comment_model.dart';
+import 'package:just/services/dio_client.dart'; // 필요에 따라 정확한 경로로 수정
 
-Future<List<Comment>> getComments(int postId) async {
+Future<List<StoryComment>> getComments(int postId) async {
   final dio = DioClient().dio;
 
-  final response = await dio.get('/get/$postId/comments');
+  final response = await dio.get('/v2/get/$postId/comments');
   if (response.statusCode == 200) {
     List<dynamic> jsonComments = response.data["comments"];
-    Map<int, Comment> commentsMap = {};
+    List<StoryComment> comments = [];
 
     for (var jsonComment in jsonComments) {
-      if (jsonComment['parent'] != null) {
-        var parentJson = jsonComment['parent'];
-        int parentId = parentJson['comment_id'];
-
-        Comment parentComment = commentsMap.putIfAbsent(
-          parentId,
-          () => Comment(
-            commentId: parentId,
-            username: '익명',
-            timestamp: DateTime.parse(parentJson['comment_create_time']),
-            text: parentJson['comment_content'],
-            replies: [],
-          ),
-        );
-        Comment replyComment = Comment(
-          commentId: jsonComment['comment_id'],
-          username: '익명',
-          timestamp: DateTime.parse(jsonComment['comment_create_time']),
-          text: jsonComment['comment_content'],
-          replies: [],
-        );
-
-        parentComment.replies!.add(replyComment);
-      } else {
-        commentsMap.putIfAbsent(
-          jsonComment['comment_id'],
-          () => Comment(
-            commentId: jsonComment['comment_id'],
-            username: '익명',
-            timestamp: DateTime.parse(jsonComment['comment_create_time']),
-            text: jsonComment['comment_content'],
-            replies: [],
-          ),
-        );
-      }
+      StoryComment comment = StoryComment.fromJson(jsonComment);
+      comments.add(comment);
     }
 
-    return commentsMap.values.toList();
+    return comments;
   } else {
-    throw Exception('Failed to load comments');
+    throw Exception('Comments 에러 발생');
   }
 }

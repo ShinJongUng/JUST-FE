@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:just/models/post_arguments.dart';
 import 'package:just/utils/format_iso_string.dart';
 

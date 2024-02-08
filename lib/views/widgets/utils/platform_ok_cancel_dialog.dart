@@ -18,12 +18,12 @@ class PlatformOkCancelDialog extends StatelessWidget {
       required this.cancelText,
       this.okTextColor = Colors.blue});
 
-  pressedOkButton() {
+  void pressedOkButton() {
     Get.back();
     Get.back();
   }
 
-  pressedCancelButton() {
+  void pressedCancelButton() {
     Get.back();
   }
 

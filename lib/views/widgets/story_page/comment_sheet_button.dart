@@ -27,19 +27,19 @@ class _CommentSheetButtonState extends State<CommentSheetButton> {
     commentsCount = widget.numbersOfComments;
   }
 
+  void increaseCommentCount() {
+    if (widget.storyType == "single") {
+      setState(() {
+        commentsCount++;
+      });
+    } else {
+      final PostController pc = Get.find();
+      pc.increaseCommentCount(widget.postId);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    void increaseCommentCount() {
-      if (widget.storyType == "single") {
-        setState(() {
-          commentsCount++;
-        });
-      } else {
-        final PostController pc = Get.find();
-        pc.increaseCommentCount(widget.postId);
-      }
-    }
-
     DraggableScrollableController draggableScrollableController =
         DraggableScrollableController();
     return CustomIconButton(

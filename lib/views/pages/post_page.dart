@@ -156,6 +156,7 @@ class _PostPageState extends State<PostPage> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
         showOkCancelDialog();
@@ -166,7 +167,7 @@ class _PostPageState extends State<PostPage> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: const Text('글 작성 페이지'),
+          title: const Text('글 작성'),
           leading: IconButton(
             icon: const Icon(Icons.close),
             onPressed: () {

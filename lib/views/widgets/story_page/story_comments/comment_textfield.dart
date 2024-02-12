@@ -58,8 +58,13 @@ class _CommentTextFieldState extends State<CommentTextField> {
     } else {
       //widget.draggableScrollableController
       widget.draggableScrollableController.animateTo(1,
-          duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+          duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
     }
+  }
+
+  void pressedReplyCloseButton() {
+    widget.changeSelectedCommentId(-1);
+    FocusScope.of(context).unfocus();
   }
 
   @override
@@ -70,46 +75,65 @@ class _CommentTextFieldState extends State<CommentTextField> {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                child: TextFormField(
-                    onTap: onTextFieldTap,
-                    onChanged: (value) {
-                      setState(() {
-                        if (value.isNotEmpty) {
-                          _isTextEmpty = false;
-                        } else {
-                          _isTextEmpty = true;
-                        }
-                      });
-                    },
-                    cursorColor: Colors.white,
-                    minLines: 1,
-                    maxLines: 3,
-                    controller: _textController,
-                    decoration: InputDecoration(
-                      isDense: true,
-                      hintText: lc.isLogin ? '댓글을 입력해주세요' : '로그인이 필요한 서비스입니다.',
-                      enabled: lc.isLogin ? true : false,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(color: Colors.grey)),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(color: Colors.grey)),
-                      suffixIcon: _isTextEmpty
-                          ? null
-                          : IconButton(
-                              onPressed: onPressCommentSend,
-                              icon: const Icon(
-                                Icons.send,
-                                size: 20,
-                                color: Colors.white,
-                              ),
+              if (widget.selectedCommentId != -1)
+                SizedBox(
+                  height: 25,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('답글을 남기는 중...'),
+                      IconButton(
+                          constraints: BoxConstraints(), // constraints
+                          padding: EdgeInsets.zero,
+                          onPressed: pressedReplyCloseButton,
+                          icon: Icon(
+                            Icons.close,
+                            size: 16,
+                          ))
+                    ],
+                  ),
+                ),
+              TextFormField(
+                  onTap: onTextFieldTap,
+                  onChanged: (value) {
+                    setState(() {
+                      if (value.isNotEmpty) {
+                        _isTextEmpty = false;
+                      } else {
+                        _isTextEmpty = true;
+                      }
+                    });
+                  },
+                  cursorColor: Colors.white,
+                  minLines: 1,
+                  maxLines: 3,
+                  controller: _textController,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    hintText: lc.isLogin ? '댓글을 입력해주세요' : '로그인이 필요한 서비스입니다.',
+                    enabled: lc.isLogin ? true : false,
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 12.0),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: const BorderSide(color: Colors.grey)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: const BorderSide(color: Colors.grey)),
+                    suffixIcon: _isTextEmpty
+                        ? null
+                        : IconButton(
+                            onPressed: onPressCommentSend,
+                            icon: const Icon(
+                              Icons.send,
+                              size: 20,
+                              color: Colors.white,
                             ),
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                    )),
-              ),
+                          ),
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                  )),
             ],
           ),
         ),

@@ -74,6 +74,9 @@ class UserPostWidget extends StatelessWidget {
                                 Icons.comment,
                                 size: 17,
                               ),
+                              const SizedBox(
+                                width: 2,
+                              ),
                               Text('$numbersOfComments'),
                             ],
                           ),
@@ -85,6 +88,9 @@ class UserPostWidget extends StatelessWidget {
                               const Icon(
                                 Icons.favorite,
                                 size: 17,
+                              ),
+                              const SizedBox(
+                                width: 2,
                               ),
                               Text('$numbersOfLikes'),
                             ],

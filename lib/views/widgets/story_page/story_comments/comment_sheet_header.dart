@@ -11,6 +11,8 @@ class CommentSheetHeader extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
               onTap: () {
+                FocusScope.of(context).unfocus();
+
                 Get.back();
               },
               child: const Icon(

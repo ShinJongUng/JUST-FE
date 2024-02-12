@@ -109,7 +109,11 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
                             }),
                       );
                     }
-                    return const SizedBox();
+                    return const Expanded(
+                      child: Center(
+                        child: Text('작성 한 글이 없어요...'),
+                      ),
+                    );
                   },
                 ),
               ],
@@ -156,7 +160,11 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
                                 );
                               }));
                     }
-                    return const SizedBox();
+                    return const Expanded(
+                      child: Center(
+                        child: Text('작성 한 댓글이 없어요...'),
+                      ),
+                    );
                   },
                 ),
               ],
@@ -180,7 +188,7 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
                         child: ListView.builder(
                             scrollDirection: Axis.vertical,
                             padding: const EdgeInsets.only(bottom: 30.0),
-                            key: const PageStorageKey('my_posts'),
+                            key: const PageStorageKey('like_posts'),
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
                               Post post = snapshot.data![index];
@@ -201,7 +209,11 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
                             }),
                       );
                     }
-                    return const SizedBox();
+                    return const Expanded(
+                      child: Center(
+                        child: Text('좋아요 한 글이 없어요...'),
+                      ),
+                    );
                   },
                 ),
               ],

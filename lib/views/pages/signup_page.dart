@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' as Get;
 import 'package:just/getX/login_controller.dart';
-import 'package:just/models/login_model.dart';
+import 'package:just/models/signup_arguments.dart';
 import 'package:just/services/post_signup.dart';
 import 'package:just/views/widgets/utils/platform_ok_cancel_dialog.dart';
 import 'package:just/views/widgets/utils/show_toast.dart';
@@ -16,8 +16,8 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LoginArguments arguments =
-        ModalRoute.of(context)?.settings.arguments as LoginArguments;
+    SignupArguments arguments =
+        ModalRoute.of(context)?.settings.arguments as SignupArguments;
     final _textController = TextEditingController();
     bool isLoading = false;
 

@@ -1,12 +1,12 @@
 import 'package:just/services/dio_client.dart';
 import 'package:dio/dio.dart';
 
-Future<Response?> postStoryPost(
-    List<String> postContent, int postPictureId, List<String> tags) async {
-  print(tags);
+Future<Response?> putStoryPost(int postId, List<String> postContent,
+    int postPictureId, List<String> tags) async {
   try {
     final Dio dio = DioClient().dio;
-    final response = await dio.post('/post/post', data: {
+    final response = await dio.put('/put/post', data: {
+      "post_id": postId,
       "hash_tage": tags,
       "post_content": postContent,
       "post_picture": postPictureId,

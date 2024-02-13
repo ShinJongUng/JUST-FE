@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:just/models/post_arguments.dart';
+import 'package:just/utils/format_iso_string.dart';
 
 class UserCommentWidget extends StatelessWidget {
   final String comments;
@@ -44,7 +44,7 @@ class UserCommentWidget extends StatelessWidget {
         child: SizedBox(
           width: double.infinity,
           height: 80,
-          child: Container(
+          child: SizedBox(
             height: 80,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +62,7 @@ class UserCommentWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      DateFormat('yyyy.MM.dd').format(DateTime.now()),
+                      parseAndFormatIso8601String(timeString),
                       style: const TextStyle(
                         fontSize: 14,
                       ),

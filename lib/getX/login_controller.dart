@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:just/models/login_model.dart';
+import 'package:just/models/signup_arguments.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:just/services/post_login.dart';
 import 'package:just/views/widgets/utils/show_toast.dart';
@@ -27,7 +27,7 @@ class LoginController extends GetxController {
       if (response != null) {
         if (response.toString() == '/api/kakao/signup') {
           Get.toNamed("/signup",
-              arguments: LoginArguments(token.accessToken, 'kakao'));
+              arguments: SignupArguments(token.accessToken, 'kakao'));
         } else {
           _signInService(response);
         }
@@ -61,7 +61,7 @@ class LoginController extends GetxController {
         if (response != null) {
           if (response.data == '/api/apple/signup') {
             Get.toNamed("/signup",
-                arguments: LoginArguments(credential.identityToken!, 'apple'));
+                arguments: SignupArguments(credential.identityToken!, 'apple'));
           } else {
             _signInService(response);
           }

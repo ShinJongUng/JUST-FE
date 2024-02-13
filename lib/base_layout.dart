@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just/getX/login_controller.dart';
 import 'package:just/getX/post_controller.dart';
+import 'package:just/models/post_type_arguments.dart';
 import 'package:just/views/pages/story_page.dart';
 import 'package:just/views/pages/user_info_page.dart';
 import 'package:just/views/widgets/utils/login_dialog.dart';
@@ -25,7 +26,7 @@ class _BaseLayoutState extends State<BaseLayout> {
     }
 
     if (index == 1) {
-      Get.toNamed("/post");
+      Get.toNamed("/post", arguments: PostTypeArguments(-1, 'write'));
       return;
     }
 
@@ -40,6 +41,24 @@ class _BaseLayoutState extends State<BaseLayout> {
 
   void _showLoginDialog() {
     showDialog(context: context, builder: (context) => const LoginDialog());
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final int? pageIndexArguments =
+          ModalRoute.of(context)?.settings.arguments as int?;
+
+      if (pageIndexArguments != null &&
+          pageIndexArguments >= 0 &&
+          pageIndexArguments < _pages.length) {
+        setState(() {
+          _selectedIndex = pageIndexArguments;
+        });
+      }
+    });
   }
 
   final List<Widget> _pages = const [

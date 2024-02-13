@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:just/getX/post_write_controller.dart';
+import 'package:just/models/post_type_arguments.dart';
 import 'package:just/services/post_story_post.dart';
+import 'package:just/services/put_story_post.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 class PostTagPage extends StatefulWidget {
@@ -21,36 +23,58 @@ class _PostTagPageState extends State<PostTagPage> {
     _distanceToField = MediaQuery.of(context).size.width;
   }
 
-  void onPressedPostButton() async {
-    try {
-      EasyLoading.show(status: '로딩중...');
-      pwc.isPosting.value = true;
-      final response = await postStoryPost(
-          pwc.textControllers.map((e) => e.text.trim()).toList(),
-          pwc.imageId.value,
-          pwc.tagController.getTags!);
-
-      if (response != null) {
-        EasyLoading.showSuccess('글 작성 성공!');
-      } else {
-        EasyLoading.showError('글 작성 실패\n잠시 후 다시 시도해주세요.');
-      }
-    } catch (e) {
-      EasyLoading.showError('글 작성 실패\n잠시 후 다시 시도해주세요.');
-    } finally {
-      pwc.isPosting.value = false;
-    }
-
-    if (!pwc.isPosting.value) {
-      Get.offAllNamed('/');
-    }
-    Future.delayed(const Duration(milliseconds: 500), () {
-      Get.delete<PostWriteController>();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final PostTypeArguments postTypeArguments =
+        ModalRoute.of(context)?.settings.arguments as PostTypeArguments;
+    final bool isEdit = postTypeArguments.postType == 'edit';
+    final int postId = postTypeArguments.postId;
+
+    void onPressedPostButton() async {
+      try {
+        if (isEdit) {
+          EasyLoading.show(status: '수정중...');
+          pwc.isPosting.value = true;
+          final response = await putStoryPost(
+              postId,
+              pwc.textControllers.map((e) => e.text.trim()).toList(),
+              pwc.imageId.value,
+              pwc.tagController.getTags!);
+
+          if (response != null) {
+            EasyLoading.showSuccess('글 수정 성공!');
+          } else {
+            EasyLoading.showError('글 수정 실패\n잠시 후 다시 시도해주세요.');
+          }
+        } else {
+          EasyLoading.show(status: '로딩중...');
+          pwc.isPosting.value = true;
+          final response = await postStoryPost(
+              pwc.textControllers.map((e) => e.text.trim()).toList(),
+              pwc.imageId.value,
+              pwc.tagController.getTags!);
+
+          if (response != null) {
+            EasyLoading.showSuccess('글 작성 성공!');
+          } else {
+            EasyLoading.showError('글 작성 실패\n잠시 후 다시 시도해주세요.');
+          }
+        }
+      } catch (e) {
+        EasyLoading.showError(
+            isEdit ? '글 수정 실패\n잠시 후 다시 시도해주세요.' : '글 작성 실패\n잠시 후 다시 시도해주세요.');
+      } finally {
+        pwc.isPosting.value = false;
+      }
+
+      if (!pwc.isPosting.value) {
+        Get.offAllNamed('/', arguments: 2);
+      }
+      Future.delayed(const Duration(milliseconds: 500), () {
+        Get.delete<PostWriteController>();
+      });
+    }
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,

@@ -11,6 +11,7 @@ import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 class StoryFrameWidget extends StatefulWidget {
   final int numbersOfLikes;
   final int numbersOfComments;
+  final List<String> postTags;
   final Widget userPost;
   final int postLength;
   final int selectPage;
@@ -24,6 +25,7 @@ class StoryFrameWidget extends StatefulWidget {
       required this.isLike,
       required this.numbersOfComments,
       required this.numbersOfLikes,
+      required this.postTags,
       required this.userPost,
       required this.postLength,
       required this.selectPage,
@@ -70,6 +72,7 @@ class _StoryFrameWidgetState extends State<StoryFrameWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
       body: Stack(
         children: [
           widget.userPost,
@@ -99,13 +102,22 @@ class _StoryFrameWidgetState extends State<StoryFrameWidget> {
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(20.0),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: Text(
+                        widget.postTags.map((e) => '#$e').join(" "),
+                        maxLines: 2,
+                        style: const TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )),
+                  const Padding(
                     padding: EdgeInsets.symmetric(vertical: 15.0),
                     child: Row(
                       children: [

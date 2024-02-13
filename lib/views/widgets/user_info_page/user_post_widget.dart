@@ -6,6 +6,7 @@ import 'package:just/utils/format_iso_string.dart';
 class UserPostWidget extends StatelessWidget {
   final String title;
   final List<String> postContents;
+  final List<String> postTags;
   final int numbersOfComments;
   final int numbersOfLikes;
   final String timeString;
@@ -22,6 +23,7 @@ class UserPostWidget extends StatelessWidget {
       required this.timeString,
       required this.bgImageId,
       required this.postContents,
+      required this.postTags,
       required this.like});
 
   @override
@@ -32,6 +34,7 @@ class UserPostWidget extends StatelessWidget {
             postId: postId,
             bgImageId: bgImageId,
             pagesText: postContents,
+            postTags: postTags,
             numbersOfComments: numbersOfComments,
             numbersOfLikes: numbersOfLikes,
             like: like,

@@ -6,6 +6,7 @@ import 'package:just/models/post_arguments.dart';
 class UserCommentWidget extends StatelessWidget {
   final String comments;
   final List<String> postContents;
+  final List<String> postTags;
   final int numbersOfComments;
   final int numbersOfLikes;
   final String timeString;
@@ -22,6 +23,7 @@ class UserCommentWidget extends StatelessWidget {
       required this.timeString,
       required this.bgImageId,
       required this.postContents,
+      required this.postTags,
       required this.like});
 
   @override
@@ -32,6 +34,7 @@ class UserCommentWidget extends StatelessWidget {
             postId: postId,
             bgImageId: bgImageId,
             pagesText: postContents,
+            postTags: postTags,
             numbersOfComments: numbersOfComments,
             numbersOfLikes: numbersOfLikes,
             like: like,

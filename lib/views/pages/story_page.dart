@@ -63,7 +63,7 @@ class _StoryPageState extends State<StoryPage> {
       appBar: AppBar(
         centerTitle: false,
         backgroundColor: Colors.transparent,
-        elevation: 0.0,
+        elevation: 0,
         title: const Text('글'),
         actions: [
           IconButton(
@@ -94,6 +94,7 @@ class _StoryPageState extends State<StoryPage> {
               key: ValueKey(post.postId),
               storyType: "multiple",
               postId: post.postId,
+              postTags: post.postHashTag,
               isLike: post.like,
               numbersOfComments: post.commentCount,
               numbersOfLikes: post.likeCount,

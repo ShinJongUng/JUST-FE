@@ -105,9 +105,16 @@ class SignUpPage extends StatelessWidget {
                 onPressed: () {
                   showDialog(
                       context: context,
-                      builder: (context) => const PlatformOkCancelDialog(
+                      builder: (context) => PlatformOkCancelDialog(
                           title: '가입 취소',
                           content: '닉네임 등록을 취소하시겠습니까?',
+                          onPressedOkButton: () {
+                            Get.Get.back();
+                            Get.Get.back();
+                          },
+                          onPressedCancelButton: () {
+                            Get.Get.back();
+                          },
                           okText: '예',
                           cancelText: '아니요'));
                 },

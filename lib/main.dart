@@ -8,6 +8,7 @@ import 'package:just/base_layout.dart';
 import 'package:just/getX/post_controller.dart';
 import 'package:just/views/pages/login_page.dart';
 import 'package:just/views/pages/post_page.dart';
+import 'package:just/views/pages/post_tag_page.dart';
 import 'package:just/views/pages/search_page.dart';
 import 'package:just/views/pages/setting_page.dart';
 import 'package:just/views/pages/signup_page.dart';
@@ -21,6 +22,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 final List<GetPage> appRoutes = [
   GetPage(name: "/", page: () => const BaseLayout()),
   GetPage(name: "/post", page: () => const PostPage()),
+  GetPage(name: "/post-tag", page: () => const PostTagPage()),
   GetPage(name: "/story", page: () => const StoryPage()),
   GetPage(name: "/user-info", page: () => const UserInfoPage()),
   GetPage(name: "/login", page: () => const LoginPage()),
@@ -77,24 +79,20 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  final ThemeData _commonThemeData = ThemeData.dark().copyWith(
+    primaryColor: Colors.greenAccent,
+    colorScheme: const ColorScheme.dark().copyWith(
+      primary: Colors.amber,
+      secondary: Colors.greenAccent,
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-        primaryColor: Colors.greenAccent,
-        colorScheme: const ColorScheme.dark().copyWith(
-          primary: Colors.amber,
-          secondary: Colors.greenAccent,
-        ),
-      ),
-      darkTheme: ThemeData.dark().copyWith(
-        primaryColor: Colors.greenAccent,
-        colorScheme: const ColorScheme.dark().copyWith(
-          primary: Colors.amber,
-          secondary: Colors.greenAccent,
-        ),
-      ),
+      theme: _commonThemeData,
+      darkTheme: _commonThemeData,
       color: Colors.greenAccent,
       home: FutureBuilder<void>(
         future: _isDeviceLoggedInFuture,

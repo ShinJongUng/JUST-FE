@@ -7,6 +7,7 @@ class StoryBuilderWidget extends StatefulWidget {
   final int numbersOfLikes;
   final int bgImageId;
   final List<dynamic> pagesText;
+  final List<String> postTags;
   final int postId;
   final bool isLike;
   final String storyType;
@@ -15,6 +16,7 @@ class StoryBuilderWidget extends StatefulWidget {
     super.key,
     required this.numbersOfComments,
     required this.numbersOfLikes,
+    required this.postTags,
     required this.bgImageId,
     required this.pagesText,
     required this.postId,
@@ -71,6 +73,7 @@ class _StoryBuilderWidgetState extends State<StoryBuilderWidget> {
         storyType: widget.storyType,
         postId: widget.postId,
         isLike: widget.isLike,
+        postTags: widget.postTags,
         numbersOfComments: widget.numbersOfComments,
         numbersOfLikes: widget.numbersOfLikes,
         postLength: widget.pagesText.length,

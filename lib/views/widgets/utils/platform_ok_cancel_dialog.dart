@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 
-import 'package:get/get.dart';
-
 class PlatformOkCancelDialog extends StatelessWidget {
   final String title;
   final String content;
   final String okText;
   final String cancelText;
+  final Function() onPressedOkButton;
+  final Function() onPressedCancelButton;
   final Color okTextColor;
   const PlatformOkCancelDialog(
       {super.key,
@@ -16,16 +16,9 @@ class PlatformOkCancelDialog extends StatelessWidget {
       required this.content,
       required this.okText,
       required this.cancelText,
+      required this.onPressedOkButton,
+      required this.onPressedCancelButton,
       this.okTextColor = Colors.blue});
-
-  void pressedOkButton() {
-    Get.back();
-    Get.back();
-  }
-
-  void pressedCancelButton() {
-    Get.back();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +28,11 @@ class PlatformOkCancelDialog extends StatelessWidget {
         content: Text(content),
         actions: <Widget>[
           CupertinoDialogAction(
-            onPressed: pressedCancelButton,
+            onPressed: onPressedCancelButton,
             child: Text(cancelText),
           ),
           CupertinoDialogAction(
-            onPressed: pressedOkButton,
+            onPressed: onPressedOkButton,
             child: Text(okText, style: TextStyle(color: okTextColor)),
           ),
         ],
@@ -50,11 +43,11 @@ class PlatformOkCancelDialog extends StatelessWidget {
         content: Text(content),
         actions: <Widget>[
           TextButton(
-            onPressed: pressedOkButton,
+            onPressed: onPressedOkButton,
             child: Text(okText),
           ),
           TextButton(
-            onPressed: pressedCancelButton,
+            onPressed: onPressedCancelButton,
             child: Text(cancelText),
           ),
         ],

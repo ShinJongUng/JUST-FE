@@ -21,6 +21,7 @@ class SinglePostPage extends StatelessWidget {
           storyType: "single",
           postId: arguments.postId,
           isLike: arguments.like,
+          postTags: arguments.postTags,
           numbersOfComments: arguments.numbersOfComments,
           numbersOfLikes: arguments.numbersOfLikes,
           bgImageId: arguments.bgImageId,

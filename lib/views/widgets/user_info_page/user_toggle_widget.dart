@@ -100,6 +100,7 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
                                     : post.postContents[0]
                                         .trim()
                                         .substring(0, 10),
+                                postTags: post.postHashTag,
                                 postContents: post.postContents,
                                 numbersOfComments: post.commentCount,
                                 numbersOfLikes: post.likeCount,
@@ -151,6 +152,7 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
                                           : commentPost.commentContent
                                               .trim()
                                               .substring(0, 10),
+                                  postTags: commentPost.post.postHashTag,
                                   postContents: commentPost.post.postContents,
                                   numbersOfComments:
                                       commentPost.post.commentCount,
@@ -200,6 +202,7 @@ class _UserToggleWidgetState extends State<UserToggleWidget>
                                     : post.postContents[0]
                                         .trim()
                                         .substring(0, 10),
+                                postTags: post.postHashTag,
                                 postContents: post.postContents,
                                 numbersOfComments: post.commentCount,
                                 numbersOfLikes: post.likeCount,
